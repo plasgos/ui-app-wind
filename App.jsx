@@ -4,20 +4,20 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NativeWindStyleSheet } from "nativewind";
 import { withExpoSnack } from 'nativewind';
 
+import _nav, {linking} from './src/_nav';
 import './style.css';
-
-import HomeScreen from './src/screens/home';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} options={{
-          header: () => {},
-          title: "Plasgos | B2B Marketplace"
-        }}/>
+        {
+          _nav.map(item => (
+            <Stack.Screen key={item.name} name={item.name} component={item.component} options={item.options}/>
+          ))
+        }
       </Stack.Navigator>
     </NavigationContainer>
   );
