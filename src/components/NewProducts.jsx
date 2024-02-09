@@ -6,6 +6,7 @@ import {
   Text,
   View,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 
 import { IoLocationOutline } from "react-icons/io5";
@@ -63,7 +64,7 @@ const data = [
 ];
 
 const Item = ({ product }) => (
-  <View className="flex flex-col justify-between rounded-lg shadow-md border border-slate-300 w-[170px]">
+  <TouchableOpacity className="flex flex-col justify-between rounded-lg shadow-md border border-slate-300 w-[170px]">
     <View className="w-full">
       <Image
         className="rounded-lg"
@@ -83,7 +84,7 @@ const Item = ({ product }) => (
         <Text className=" ml-2">{product.location}</Text>
       </View>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
 export const NewProducts = () => {
