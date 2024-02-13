@@ -7,7 +7,7 @@ import { IoCartOutline, IoNotificationsOutline } from "react-icons/io5";
 import { GoPackage } from "react-icons/go";
 import { FaRegUser } from "react-icons/fa6";
 
-export const BottomBar = () => {
+const BottomBar = () => {
   return (
     <SafeAreaView className="flex flex-row items-center justify-between py-3 px-5 bg-white  absolute bottom-0 right-0 w-full  shadow-lg ">
       <TouchableOpacity onPress={() => {}} className="items-center">
@@ -45,3 +45,5 @@ export const BottomBar = () => {
     </SafeAreaView>
   );
 };
+
+export default BottomBar;
