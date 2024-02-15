@@ -7,6 +7,7 @@ import NewProducts from "../../components/NewProducts";
 import { View, Text, ScrollView } from "react-native";
 import React from "react";
 import { StatusBar } from "expo-status-bar";
+import Toast from "react-native-toast-message";
 
 export default function Home() {
   return (
