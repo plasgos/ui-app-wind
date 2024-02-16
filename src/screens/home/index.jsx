@@ -1,7 +1,6 @@
 import React from "react";
 
 import { ScrollView, Text, View } from "react-native";
-import LayoutHomeScreen from "../_layout";
 import { Categories } from "../../components/Categories";
 import { RecomendedStore } from "../../components/RecomendedStore";
 import { FindYourItem } from "../../components/FindYourItem";
@@ -12,19 +11,21 @@ export default function HomeScreen() {
 
   return (
     <>
-      <LayoutHomeScreen>
-        <ScrollView showsVerticalScrollIndicator>
-          <View className="h-[10px] bg-white" />
+      <ScrollView showsVerticalScrollIndicator>
+        {/* <View className="h-[10px] bg-white" />
 
-          <View className="p-3 h-[120px] bg-white my-3"></View>
+        <View className="p-3 h-[120px] bg-white my-3"></View>
 
-          <Categories />
-          <RecomendedStore />
+        <Categories />
+        <RecomendedStore />
 
-          <FindYourItem />
-          <NewProducts />
-        </ScrollView>
-      </LayoutHomeScreen>
+        <FindYourItem />
+        <NewProducts /> */}
+
+        <View className="flex-1 justify-center items-center">
+          <Text className="text-red-500">Tes</Text>
+        </View>
+      </ScrollView>
     </>
   );
 }

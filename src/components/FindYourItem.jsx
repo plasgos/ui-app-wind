@@ -1,8 +1,8 @@
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { IoChevronForward } from "react-icons/io5";
+import { Ionicons } from "@expo/vector-icons";
 
-export const FindYourItem = () => {
+const FindYourItem = () => {
   return (
     <View className=" mb-3 bg-white">
       <Text className="font-bold text-lg bg-white pl-3 pt-2">
@@ -21,11 +21,11 @@ export const FindYourItem = () => {
       <View className="flex-row justify-end bg-white pb-3 px-3">
         <TouchableOpacity className="flex-row items-center">
           <Text className="text-[#fa541c]">Ajukan Permintaan </Text>
-          <View className="ml-1 text-[#fa541c]">
-            <IoChevronForward size={18} />{" "}
-          </View>
+          <Ionicons name="chevron-forward" size={18} color="black" />
         </TouchableOpacity>
       </View>
     </View>
   );
 };
+
+export default FindYourItem;

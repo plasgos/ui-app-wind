@@ -7,9 +7,10 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 
-import { IoLocationOutline } from "react-icons/io5";
+import { EvilIcons } from "@expo/vector-icons";
 import { formatPrice } from "../lib/format-price";
 
 const data = [
@@ -63,8 +64,8 @@ const data = [
   },
 ];
 
-const Item = ({ product }) => (
-  <TouchableOpacity className="flex flex-col justify-between rounded-lg shadow-md border border-slate-300 w-[170px]">
+const CardProducts = ({ product }) => (
+  <TouchableOpacity className="flex flex-col justify-between rounded-lg grow shadow-md border border-slate-300 w-[150px]  my-1 mx-1 ">
     <View className="w-full">
       <Image
         className="rounded-lg"
@@ -77,9 +78,7 @@ const Item = ({ product }) => (
       {formatPrice(product.price)}
     </Text>
     <View className=" mx-3 mb-3 flex-row items-center">
-      <View>
-        <IoLocationOutline size={18} />
-      </View>
+      <EvilIcons name="location" size={18} color="black" />
       <View>
         <Text className=" ml-2">{product.location}</Text>
       </View>
@@ -87,7 +86,7 @@ const Item = ({ product }) => (
   </TouchableOpacity>
 );
 
-export const NewProducts = () => {
+const NewProducts = () => {
   return (
     <View className="mb-3 px-3 bg-white">
       <View>
@@ -95,19 +94,12 @@ export const NewProducts = () => {
           Produk Terbaru Untukmu
         </Text>
       </View>
-      <SafeAreaView>
-        <FlatList
-          data={data}
-          renderItem={({ item }) => <Item product={item} />}
-          keyExtractor={(item, index) => index.toString()}
-          numColumns={2}
-          columnWrapperStyle={{
-            justifyContent: "flex-start",
-            gap: 10,
-            marginBottom: 10,
-          }}
-        />
-      </SafeAreaView>
+      <View className="flex-row flex-wrap  ">
+        {data.map((data, index) => (
+          <CardProducts key={index} product={data} />
+        ))}
+      </View>
     </View>
   );
 };
+export default NewProducts;

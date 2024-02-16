@@ -1,8 +1,7 @@
 import React from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-import { IoStorefrontSharp } from "react-icons/io5";
-import { IoLocation } from "react-icons/io5";
+import { Entypo } from "@expo/vector-icons";
 
 const listStore = [
   { title: "Kios Jajan", location: "Bandung" },
@@ -14,7 +13,11 @@ const listStore = [
   { title: "OurShoes_2", location: "Bekasi" },
 ];
 
-export const RecomendedStore = () => {
+function Icons(props) {
+  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+}
+
+const RecomendedStore = () => {
   return (
     <View className=" my-3">
       <Text className="font-bold text-lg bg-white pl-3 pt-2">
@@ -28,17 +31,19 @@ export const RecomendedStore = () => {
           <TouchableOpacity
             key={index}
             onPress={() => {}}
-            className="flex flex-col justify-between w-[110px] p-2 border border-slate-400 rounded-lg "
+            className="flex flex-col justify-between w-[120px] p-2 border border-slate-300 rounded-lg "
           >
             <View className="mb-2 mt-2 mx-auto text-center text-slate-400">
-              <IoStorefrontSharp size={80} />
+              <Image
+                style={{ width: 80, height: 80 }}
+                source={require("../../assets/images/store.png")}
+              />
             </View>
             <Text className=" text-xs  mb-3 ">{store.title}</Text>
 
-            <View className="flex-row">
-              <View className="mr-1">
-                <IoLocation size={18} />
-              </View>
+            <View className="flex-row items-center">
+              <Entypo name="location-pin" size={18} color="black" />
+
               <Text className=" text-xs  ">{store.location}</Text>
             </View>
           </TouchableOpacity>
@@ -47,3 +52,4 @@ export const RecomendedStore = () => {
     </View>
   );
 };
+export default RecomendedStore;
