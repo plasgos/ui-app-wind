@@ -3,21 +3,30 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 const listCategories = [
   {
-    image: require("../../assets/images/dashboard.png"),
+    image: require("../../../assets/images/dashboard.png"),
     title: "Semua Kategori",
   },
   {
-    image: require("../../assets/images/notebook.png"),
+    image: require("../../../assets/images/notebook.png"),
     title: "Alat Tulis Kantor",
   },
-  { image: require("../../assets/images/book.png"), title: "Buku" },
-  { image: require("../../assets/images/responsive.png"), title: "Elektronik" },
-  { image: require("../../assets/images/tshirt.png"), title: "Fashion Anak" },
+  { image: require("../../../assets/images/book.png"), title: "Buku" },
   {
-    image: require("../../assets/images/muslimah.png"),
+    image: require("../../../assets/images/responsive.png"),
+    title: "Elektronik",
+  },
+  {
+    image: require("../../../assets/images/tshirt.png"),
+    title: "Fashion Anak",
+  },
+  {
+    image: require("../../../assets/images/muslimah.png"),
     title: "Fashion Muslim",
   },
-  { image: require("../../assets/images/fashion.png"), title: "Fashion Pria" },
+  {
+    image: require("../../../assets/images/fashion.png"),
+    title: "Fashion Pria",
+  },
 ];
 
 const Categories = () => {

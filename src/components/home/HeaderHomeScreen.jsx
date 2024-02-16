@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-// import { Link, router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
 import {
   SafeAreaView,
@@ -12,55 +12,36 @@ import {
   View,
 } from "react-native";
 
-const Header = () => {
-  // const [text, setText] = useState("");
-
-  const handleInputChange = (inputText) => {
-    setText(inputText);
-  };
-
-  const handleSearch = () => {
-    router.push({ pathname: "/search" });
-  };
-
+const HeaderHomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView className="flex flex-row items-center gap-x-3 p-3 bg-white  ">
-      {/* <View className="absolute left-5 text-slate-300">
+      <StatusBar translucent={false} />
+      <View className="absolute left-5 text-slate-300">
         <FontAwesome name="search" size={24} color="#cbd2d9" />
       </View>
 
- 
-
       <TouchableOpacity
-        onPress={handleSearch} 
+        onPress={() => navigation.navigate("Search")}
         className="flex-1 h-10 w-full border-2 border-slate-300 py-2 px-4 rounded-lg flex pl-10 justify-center"
       >
         <Text style={{ color: "#718096" }}>Cari Kebutuhan anda</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() =>
-          router.push({
-            pathname: "/cart",
-          })
-        }
+        onPress={() => navigation.navigate("Cart")}
         className="text-slate-400"
       >
         <AntDesign name="shoppingcart" size={26} color="#cbd2d9" />
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() =>
-          router.push({
-            pathname: "/message",
-          })
-        }
+        onPress={() => navigation.navigate("Message")}
         className="text-slate-400 mt-0.5"
       >
         <Ionicons name="chatbox-ellipses-outline" size={26} color="#cbd2d9" />
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
-export default Header;
+export default HeaderHomeScreen;

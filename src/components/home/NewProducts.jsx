@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Image,
-  SafeAreaView,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import React from "react";
+import { Image, Text, View, TouchableOpacity } from "react-native";
 
 import { EvilIcons } from "@expo/vector-icons";
-import { formatPrice } from "../lib/format-price";
+import { formatPrice } from "../../lib/format-price";
 
 const data = [
   {
-    image: require("../../assets/images/banner.png"),
+    // image: require("../../../assets/images/banner.png"),
     title: "Parfum Ucok Baba",
     price: 70000,
     location: "Depok",
@@ -23,7 +14,7 @@ const data = [
     isCashback: false,
   },
   {
-    image: require("../../assets/images/banner.png"),
+    // image: require("../../../assets/images/banner.png"),
     title: "Tas Selempang Pria Waistbag Slingbag Tas ",
     price: 170000,
     location: "Bogor",
@@ -31,7 +22,7 @@ const data = [
     isCashback: false,
   },
   {
-    image: require("../../assets/images/banner.png"),
+    // image: require("../../../assets/images/banner.png"),
     title: "Susu Kambing Etamilku isi 10 Saset",
     price: 70000,
     location: "Depok",
@@ -39,7 +30,7 @@ const data = [
     isCashback: true,
   },
   {
-    image: require("../../assets/images/banner.png"),
+    // image: require("../../../assets/images/banner.png"),
     title: "Sambal teri khas singkawang",
     price: 19000,
     location: "Jakarta",
@@ -47,7 +38,7 @@ const data = [
     isCashback: false,
   },
   {
-    image: require("../../assets/images/banner.png"),
+    // image: require("../../../assets/images/banner.png"),
     title: "Berkah furniture jogja",
     price: 3500,
     location: "Bantul",
@@ -55,7 +46,7 @@ const data = [
     isCashback: false,
   },
   {
-    image: require("../../assets/images/banner.png"),
+    // image: require("../../../assets/images/banner.png"),
     title: "Parfum Ucok Baba",
     price: 70000,
     location: "Depok",
@@ -69,8 +60,8 @@ const CardProducts = ({ product }) => (
     <View className="w-full">
       <Image
         className="rounded-lg"
-        style={{ width: "100%" }}
-        source={product.image}
+        style={{ width: "100%", height: 120 }}
+        source={require("../../../assets/images/banner.png")}
       />
     </View>
     <Text className="m-3">{product.title}</Text>
@@ -88,7 +79,7 @@ const CardProducts = ({ product }) => (
 
 const NewProducts = () => {
   return (
-    <View className="mb-3 px-3 bg-white">
+    <View className="mb-3 px-3 bg-white pb-3">
       <View>
         <Text className="font-bold text-lg bg-white  pt-2 mb-3">
           Produk Terbaru Untukmu

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "plasgos",
-    "slug": "Plasgos",
-    "schema": "Plasgos",
+    "name": "plasgos-react-navigation",
+    "slug": "plasgos-react-navigation",
+    "scheme": "plasgos-react-navigation",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,8 +23,7 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png",
-      "name": "Plasgos"
+      "favicon": "./assets/favicon.png"
     }
   }
 }

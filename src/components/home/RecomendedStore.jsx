@@ -36,7 +36,7 @@ const RecomendedStore = () => {
             <View className="mb-2 mt-2 mx-auto text-center text-slate-400">
               <Image
                 style={{ width: 80, height: 80 }}
-                source={require("../../assets/images/store.png")}
+                source={require("../../../assets/images/store.png")}
               />
             </View>
             <Text className=" text-xs  mb-3 ">{store.title}</Text>

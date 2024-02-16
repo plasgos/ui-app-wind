@@ -15,7 +15,7 @@ const FindYourItem = () => {
         <Image
           className="rounded-lg"
           style={{ width: "100%" }}
-          source={require("../../assets/images/banner.png")}
+          source={require("../../../assets/images/banner.png")}
         />
       </View>
       <View className="flex-row justify-end bg-white pb-3 px-3">
