@@ -45,7 +45,7 @@ export default function TabsLayout() {
         })}
       />
       <Tab.Screen
-        name="Notifications"
+        name="notifications"
         component={Notifications}
         options={{
           tabBarIcon: ({ color, size }) => {
@@ -54,7 +54,7 @@ export default function TabsLayout() {
         }}
       />
       <Tab.Screen
-        name="RFQ"
+        name="rfq"
         component={RFQ}
         options={{
           tabBarIcon: ({ color, size }) => {
@@ -63,7 +63,7 @@ export default function TabsLayout() {
         }}
       />
       <Tab.Screen
-        name="Whislist"
+        name="whislist"
         component={Whislist}
         options={{
           tabBarIcon: ({ color, size }) => {
@@ -72,7 +72,7 @@ export default function TabsLayout() {
         }}
       />
       <Tab.Screen
-        name="Account"
+        name="account"
         component={Account}
         options={{
           tabBarIcon: ({ color, size }) => {

@@ -1,7 +1,7 @@
 import * as Linking from "expo-linking";
 
 import HomeScreen from "./screens/home";
-// import LoginScreen from "./screens/login";
+import RegisterScreen from "./screens/register";
 
 export default [
   {
@@ -12,14 +12,14 @@ export default [
       title: "Plasgos | B2B Marketplace Indonesia",
     },
   },
-  //   {
-  //     name: "Login",
-  //     component: LoginScreen,
-  //     options: {
-  //       headerShown: false,
-  //       title: "Masuk Plasgos",
-  //     },
-  //   },
+  {
+    name: "Register",
+    component: RegisterScreen,
+    options: {
+      headerShown: false,
+      title: "Daftar Plasgos",
+    },
+  },
 ];
 
 export const linking = {
@@ -29,9 +29,9 @@ export const linking = {
       Home: {
         path: "/",
       },
-      //   Login: {
-      //     path: "/login",
-      //   },
+      Register: {
+        path: "/register",
+      },
       //  ... other screens
     },
   },
