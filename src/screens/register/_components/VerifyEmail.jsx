@@ -31,13 +31,16 @@ export default function VerifyEmail({ route }) {
 
   return (
     <View className="flex-1 justify-center items-center p-10">
-      <Text className="text-xl">Verifikasi Email</Text>
+      <Text className="text-xl mb-3">Verifikasi Email</Text>
       <Text className="text-sm text-center text-slate-400 mb-3">
-        Silahkan Masukan Kode Otp yang sudah di kirim melalui email anda
+        Silahkan Masukan Kode Otp yang sudah di kirim melalui email :
+        <Text className="font-semibold text-black"> {email}</Text>
       </Text>
       <View className="flex-row gap-x-3">
         {inputs.map((input, index) => (
           <Input
+            style={{ outlineStyle: "none" }}
+            inputContainerStyle={{ borderWidth: 0 }}
             containerStyle={{ width: 50 }}
             key={index}
             ref={inputs[index]}
@@ -48,7 +51,6 @@ export default function VerifyEmail({ route }) {
           />
         ))}
       </View>
-
       <Button
         title="Verifikasi"
         buttonStyle={{

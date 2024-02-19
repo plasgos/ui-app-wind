@@ -35,13 +35,13 @@ const HeaderHomeScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate("message")}
+        onPress={() => navigation.navigate("message", { name: "sofyan" })}
         className="text-slate-400 mt-0.5"
       >
         <Ionicons name="chatbox-ellipses-outline" size={26} color="#cbd2d9" />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("register")}
+        onPress={() => navigation.navigate("Register")}
         className="text-slate-400 mt-0.5"
       >
         <Ionicons name="log-in" size={26} color="#cbd2d9" />

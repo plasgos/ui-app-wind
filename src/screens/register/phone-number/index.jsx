@@ -1,11 +1,30 @@
 import { View, Text } from "react-native";
-import React, { useState } from "react";
-import { Card, Button, Input } from "@rneui/themed";
+import React from "react";
 import Toast from "react-native-toast-message";
-import axios from "axios";
+import { FontAwesome } from "@expo/vector-icons";
+import { Card, Button, Input, Dialog } from "@rneui/themed";
+import { useForm, Controller } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCheckPhoneNumber,
+  resetCheckRegister,
+} from "../../../redux/modules/register/reducer";
 
 export default function PhoneNumberRegister() {
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      phoneNumber: "",
+    },
+  });
+
+  const { check } = useSelector((state) => state.register);
+  console.log("🚀 ~ PhoneNumberRegister ~ check:", check);
+  const dispatch = useDispatch();
 
   const validatePhoneNumber = (phoneNumber) => {
     const regex =
@@ -13,7 +32,7 @@ export default function PhoneNumberRegister() {
     return regex.test(phoneNumber);
   };
 
-  const onSubmitPhoneNumber = async () => {
+  const onSubmitPhoneNumber = async ({ phoneNumber }) => {
     try {
       if (!validatePhoneNumber(phoneNumber)) {
         Toast.show({
@@ -23,60 +42,133 @@ export default function PhoneNumberRegister() {
         });
       }
 
-      const response = await axios.post(
-        "http://46.28.44.41:3001/v2/register/check/phone",
-        { phone_number: phoneNumber }
-      );
-
-      const data = response.data;
-
-      if (data.registered) {
-        Toast.show({
-          type: "error",
-          text1: "Nomor Telephone Sudah Terdaftar",
-          text2: "Silahkan Masukan Nomor Telephone Lain Yang Belum Terdaftar",
-        });
-        setPhoneNumber("");
-      }
-
-      console.log(data);
+      await dispatch(getCheckPhoneNumber({ phoneNumber }));
     } catch (error) {
       console.error("Error:", error);
     }
+  };
+
+  const handleCancel = () => {
+    dispatch(resetCheckRegister());
   };
 
   return (
     <View className="flex-1 justify-center items-center">
       <Card containerStyle={{ width: "90%" }}>
         <View>
-          <Input
-            value={phoneNumber}
-            keyboardType="number-pad"
-            onChangeText={(inputValue) => setPhoneNumber(inputValue)}
-            placeholder="Masukan Nomor Telephone Anda"
-            inputContainerStyle={{ paddingVertical: 10 }}
-            inputStyle={{
-              fontSize: 16,
-              paddingHorizontal: 10,
+          <Controller
+            control={control}
+            rules={{
+              required: true,
             }}
-            leftIcon={{
-              type: "material-community-icons",
-              name: "phone",
-              iconStyle: { marginRight: 6, color: "#2089DC" },
-            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                errorMessage={
+                  errors.phoneNumber && "Nomor Telephone Harus Di Isi."
+                }
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                style={{ outlineStyle: "none" }}
+                keyboardType="number-pad"
+                placeholder="Masukan Nomor Telephone Anda"
+                inputContainerStyle={{
+                  paddingVertical: 10,
+                  borderColor: "transparent",
+                }}
+                inputStyle={{
+                  fontSize: 16,
+                  paddingHorizontal: 10,
+                  borderWidth: 0,
+                }}
+                leftIcon={() => (
+                  <FontAwesome name="phone" size={24} color="#fa541c" />
+                )}
+              />
+            )}
+            name="phoneNumber"
           />
 
           <Button
-            onPress={onSubmitPhoneNumber}
+            onPress={handleSubmit(onSubmitPhoneNumber)}
             size="sm"
             radius={"sm"}
             type="solid"
+            color="#fa541c"
             titleStyle={{ fontSize: 16 }}
           >
             Submit
           </Button>
         </View>
       </Card>
+
+      {check && check.data && check.data.registered && (
+        <Dialog>
+          <Dialog.Title
+            titleStyle={{ textAlign: "center" }}
+            title={`No Telephone Sudah Terdaftar`}
+          />
+          <Text className="my-3">
+            Masuk dengan No Telephone ini{" "}
+            <Text className="font-bold">{check?.data?.data.phone_number}</Text>{" "}
+            ?
+          </Text>
+          <Dialog.Actions>
+            <Dialog.Button
+              title="Ya"
+              type="solid"
+              radius={"md"}
+              color="#fa541c"
+              containerStyle={{ flex: 1 }}
+              onPress={() => {
+                // toggleDialog5();
+              }}
+            />
+            <Dialog.Button
+              type="outline"
+              radius={"md"}
+              title="Tidak"
+              titleStyle={{ color: "#fa541c" }}
+              buttonStyle={{ borderColor: "#fa541c" }}
+              containerStyle={{ flex: 1 }}
+              onPress={handleCancel}
+            />
+          </Dialog.Actions>
+        </Dialog>
+      )}
+
+      {check && check.data && check.data.registered === false && (
+        <Dialog>
+          <Dialog.Title
+            titleStyle={{ textAlign: "center" }}
+            title={check?.data?.data.phone_number}
+          />
+          <Text className="my-3">
+            Apakah No Telephone yang anda masukan sudah benar ?
+          </Text>
+          <Dialog.Actions>
+            <Dialog.Button
+              title="Ya, Benar"
+              type="solid"
+              radius={"md"}
+              color="#fa541c"
+              containerStyle={{ flex: 1 }}
+              onPress={() => {
+                // toggleDialog5();
+              }}
+            />
+            <Dialog.Button
+              type="outline"
+              radius={"md"}
+              title="Ubah"
+              titleStyle={{ color: "#fa541c" }}
+              buttonStyle={{ borderColor: "#fa541c" }}
+              containerStyle={{ flex: 1 }}
+              onPress={handleCancel}
+            />
+          </Dialog.Actions>
+        </Dialog>
+      )}
     </View>
   );
 }

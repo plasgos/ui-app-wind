@@ -1,10 +1,13 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-export default function Message() {
+export default function Message({ route }) {
+  console.log("🚀 ~ Message ~ route:", route);
+  const { name } = route.params;
+
   return (
     <View>
-      <Text>Message</Text>
+      <Text>Message {name}</Text>
     </View>
   );
 }
