@@ -12,6 +12,9 @@ import Register from "./src/screens/register";
 import EmailRegister from "./src/screens/register/email";
 import PhoneNumber from "./src/screens/register/phone-number";
 import VerifyEmail from "./src/screens/register/_components/VerifyEmail";
+import VerifyPhoneNumber from "./src/screens/register/_components/VerifyPhoneNumber";
+import CompleteRegister from "./src/screens/register/_components/CompleteRegister";
+import Login from "./src/screens/login";
 import { AntDesign } from "@expo/vector-icons";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -71,6 +74,21 @@ export default function App() {
               <Stack.Screen
                 name="verify-email"
                 component={VerifyEmail}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="verify-phone-number"
+                component={VerifyPhoneNumber}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="complete-register"
+                component={CompleteRegister}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Login"
+                component={Login}
                 options={{ headerShown: false }}
               />
             </Stack.Navigator>

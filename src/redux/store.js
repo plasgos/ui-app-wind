@@ -1,13 +1,22 @@
 import { applyMiddleware } from "redux";
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import { persistStore, persistReducer } from "redux-persist";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+  persistStore,
+  persistReducer,
+} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import createCompressor from "redux-persist-transform-compress";
 import { encryptTransform } from "redux-persist-transform-encrypt";
-
 import rootSaga from "./sagas";
 import rootReducers from "./reducers";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const encryptor = encryptTransform({ secretKey: "secretkey" });
 const compressor = createCompressor({
@@ -17,7 +26,7 @@ const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
   transforms: [encryptor],
   key: "root",
-  storage,
+  storage: AsyncStorage,
   whitelist: ["login"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducers);
@@ -26,7 +35,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoreActions: ["CHECK_EMAIL"],
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }).concat(sagaMiddleware),
 });

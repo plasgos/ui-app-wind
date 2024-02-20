@@ -7,7 +7,7 @@ import { setVerifyOtp } from "../../../redux/modules/register/reducer";
 import { useForm, Controller } from "react-hook-form";
 import Toast from "react-native-toast-message";
 
-export default function VerifyEmail({ navigation }) {
+export default function VerifyPhoneNumber({ navigation }) {
   const { control, handleSubmit, getValues } = useForm();
 
   const { check } = useSelector((state) => state.register);
@@ -64,7 +64,7 @@ export default function VerifyEmail({ navigation }) {
 
       await dispatch(
         setVerifyOtp({
-          email: check?.data?.data.email,
+          phone_number: check?.data?.data.phone_number,
           otp_code: combinedValue,
         })
       );
@@ -75,9 +75,9 @@ export default function VerifyEmail({ navigation }) {
 
   return (
     <View className="flex-1 justify-center items-center p-10 overflow-x-hidden">
-      <Text className="text-xl mb-3">Verifikasi Email</Text>
+      <Text className="text-xl mb-3">Verifikasi No Telephone</Text>
       <Text className="text-sm text-center text-slate-400 mb-3">
-        Silahkan Masukan Kode Otp yang sudah di kirim melalui email :
+        Silahkan Masukan Kode Otp yang sudah di kirim melalui pesan ke :
         <Text className="font-semibold text-black">
           {" "}
           {check?.data?.data.phone_number}
@@ -98,6 +98,7 @@ export default function VerifyEmail({ navigation }) {
                 style={{ outlineStyle: "none" }}
                 containerStyle={{ width: 50 }}
                 maxLength={1}
+                inputStyle={{ textAlign: "center" }}
                 keyboardType="number-pad"
                 onChangeText={(text) => {
                   field.onChange(text);

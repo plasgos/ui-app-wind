@@ -1,107 +1,53 @@
 import { View, Text } from "react-native";
-import React from "react";
-import Toast from "react-native-toast-message";
-import { FontAwesome } from "@expo/vector-icons";
-import { Card, Button, Input, Dialog } from "@rneui/themed";
-import { useForm, Controller } from "react-hook-form";
+import React, { useEffect } from "react";
+import { Dialog } from "@rneui/themed";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getCheckPhoneNumber,
+  requestOtpPhoneNumber,
   resetCheckRegister,
 } from "../../../redux/modules/register/reducer";
 
-export default function PhoneNumberRegister() {
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      phoneNumber: "",
-    },
-  });
-
-  const { check } = useSelector((state) => state.register);
-  console.log("🚀 ~ PhoneNumberRegister ~ check:", check);
+export default function PhoneNumberRegister({
+  isPhoneNumberVisible,
+  setIsPhoneNumberVisible,
+  check,
+  navigation,
+}) {
+  const { otp } = useSelector((state) => state.register);
   const dispatch = useDispatch();
-
-  const validatePhoneNumber = (phoneNumber) => {
-    const regex =
-      /^[\+]?([0-9][\s]?|[0-9]?)([(][0-9]{3}[)][\s]?|[0-9]{3}[-\s\.]?)[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-    return regex.test(phoneNumber);
-  };
-
-  const onSubmitPhoneNumber = async ({ phoneNumber }) => {
-    try {
-      if (!validatePhoneNumber(phoneNumber)) {
-        Toast.show({
-          type: "error",
-          text1: "Format Tidak Sesuai",
-          text2: "Silahkan Masukan Nomor Telephone Dengan Format Yang Sesuai",
-        });
-      }
-
-      await dispatch(getCheckPhoneNumber({ phoneNumber }));
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   const handleCancel = () => {
     dispatch(resetCheckRegister());
   };
 
+  const handleLogin = () => {
+    navigation.navigate("Login");
+    setIsPhoneNumberVisible(false);
+  };
+
+  useEffect(() => {
+    if (otp.data.success) {
+      navigation.navigate("verify-phone-number");
+      setIsPhoneNumberVisible(false);
+    }
+  }, [otp]);
+
+  const handleVerify = async () => {
+    try {
+      await dispatch(
+        requestOtpPhoneNumber({ phone_number: check?.data?.data.phone_number })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (!isPhoneNumberVisible) {
+    return null;
+  }
+
   return (
-    <View className="flex-1 justify-center items-center">
-      <Card containerStyle={{ width: "90%" }}>
-        <View>
-          <Controller
-            control={control}
-            rules={{
-              required: true,
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                errorMessage={
-                  errors.phoneNumber && "Nomor Telephone Harus Di Isi."
-                }
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                style={{ outlineStyle: "none" }}
-                keyboardType="number-pad"
-                placeholder="Masukan Nomor Telephone Anda"
-                inputContainerStyle={{
-                  paddingVertical: 10,
-                  borderColor: "transparent",
-                }}
-                inputStyle={{
-                  fontSize: 16,
-                  paddingHorizontal: 10,
-                  borderWidth: 0,
-                }}
-                leftIcon={() => (
-                  <FontAwesome name="phone" size={24} color="#fa541c" />
-                )}
-              />
-            )}
-            name="phoneNumber"
-          />
-
-          <Button
-            onPress={handleSubmit(onSubmitPhoneNumber)}
-            size="sm"
-            radius={"sm"}
-            type="solid"
-            color="#fa541c"
-            titleStyle={{ fontSize: 16 }}
-          >
-            Submit
-          </Button>
-        </View>
-      </Card>
-
+    <View>
       {check && check.data && check.data.registered && (
         <Dialog>
           <Dialog.Title
@@ -120,9 +66,7 @@ export default function PhoneNumberRegister() {
               radius={"md"}
               color="#fa541c"
               containerStyle={{ flex: 1 }}
-              onPress={() => {
-                // toggleDialog5();
-              }}
+              onPress={handleLogin}
             />
             <Dialog.Button
               type="outline"
@@ -130,7 +74,7 @@ export default function PhoneNumberRegister() {
               title="Tidak"
               titleStyle={{ color: "#fa541c" }}
               buttonStyle={{ borderColor: "#fa541c" }}
-              containerStyle={{ flex: 1 }}
+              containerStyle={{ flex: 1, marginRight: 10 }}
               onPress={handleCancel}
             />
           </Dialog.Actions>
@@ -153,9 +97,7 @@ export default function PhoneNumberRegister() {
               radius={"md"}
               color="#fa541c"
               containerStyle={{ flex: 1 }}
-              onPress={() => {
-                // toggleDialog5();
-              }}
+              onPress={handleVerify}
             />
             <Dialog.Button
               type="outline"
@@ -163,7 +105,7 @@ export default function PhoneNumberRegister() {
               title="Ubah"
               titleStyle={{ color: "#fa541c" }}
               buttonStyle={{ borderColor: "#fa541c" }}
-              containerStyle={{ flex: 1 }}
+              containerStyle={{ flex: 1, marginRight: 10 }}
               onPress={handleCancel}
             />
           </Dialog.Actions>

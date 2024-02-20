@@ -32,7 +32,7 @@ export default function TabsLayout() {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
-        name="Home"
+        name="homescreen"
         component={Home}
         options={({ navigation }) => ({
           tabBarIcon: ({ color, size }) => {

@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
-import React from "react";
-import { Card, Button, Input } from "@rneui/themed";
+import React, { useState } from "react";
+import { Card, Button, Input, Dialog } from "@rneui/themed";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Image } from "@rneui/themed";
@@ -14,8 +14,12 @@ import {
   getCheckEmail,
   getCheckPhoneNumber,
 } from "../../redux/modules/register/reducer";
+import EmailRegister from "./email";
+import PhoneNumberRegister from "./phone-number";
 
 export default function Register({ navigation }) {
+  const [isEmailVisible, setIsEmailVisible] = useState(false);
+  const [isPhoneNumberVisible, setIsPhoneNumberVisible] = useState(false);
   const {
     control,
     handleSubmit,
@@ -28,8 +32,6 @@ export default function Register({ navigation }) {
   });
 
   const { check } = useSelector((state) => state.register);
-  console.log("🚀 ~ EmailRegister ~ register:", check);
-
   const dispatch = useDispatch();
 
   const validateEmail = (email) => {
@@ -38,8 +40,7 @@ export default function Register({ navigation }) {
   };
 
   const validatePhoneNumber = (phoneNumber) => {
-    const regex =
-      /^[\+]?([0-9][\s]?|[0-9]?)([(][0-9]{3}[)][\s]?|[0-9]{3}[-\s\.]?)[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+    const regex = /^(08|628)\d{5,15}$/;
     return regex.test(phoneNumber);
   };
 
@@ -48,17 +49,18 @@ export default function Register({ navigation }) {
 
     if (validateEmail(value)) {
       await dispatch(getCheckEmail({ email: value }));
-
-      // navigation.navigate("email");
+      setIsEmailVisible(true);
+      setIsPhoneNumberVisible(false);
     } else if (validatePhoneNumber(value)) {
       await dispatch(getCheckPhoneNumber({ phoneNumber: value }));
-
-      // navigation.navigate("phone-number");
+      setIsPhoneNumberVisible(true);
+      setIsEmailVisible(false);
     } else {
       Toast.show({
         type: "error",
         text1: "Format Tidak Sesuai",
-        text2: "Silahkan Masukan Email Dengan Format Yang Sesuai",
+        text2:
+          "Silahkan Masukan Email / No Telephone Dengan Format Yang Sesuai",
       });
     }
   };
@@ -70,8 +72,8 @@ export default function Register({ navigation }) {
         source={require("../../../assets/images/plasgos.png")}
       /> */}
 
-      <View className="flex-1 justify-center items-center bg-white">
-        <Card>
+      <View className="flex-1 justify-center items-center bg-white p-10">
+        <Card containerStyle={{ width: "100%" }}>
           <Card.Title>Daftar Akun</Card.Title>
           <Card.Divider />
           <View className="">
@@ -79,7 +81,7 @@ export default function Register({ navigation }) {
               Silhakan Masukan Email / Nomor Telephone
             </Text> */}
 
-            <View>
+            <View className="">
               <Controller
                 control={control}
                 rules={{
@@ -91,8 +93,7 @@ export default function Register({ navigation }) {
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
-                    style={{ outlineStyle: "none" }}
-                    keyboardType="email-address"
+                    // style={{ outlineStyle: "none" }}
                     placeholder="Email  / No Telephone"
                     inputContainerStyle={{
                       paddingVertical: 10,
@@ -128,6 +129,19 @@ export default function Register({ navigation }) {
             </View>
           </View>
         </Card>
+
+        <EmailRegister
+          isEmailVisible={isEmailVisible}
+          setIsEmailVisible={setIsEmailVisible}
+          check={check}
+          navigation={navigation}
+        />
+        <PhoneNumberRegister
+          isPhoneNumberVisible={isPhoneNumberVisible}
+          setIsPhoneNumberVisible={setIsPhoneNumberVisible}
+          check={check}
+          navigation={navigation}
+        />
       </View>
     </>
   );
