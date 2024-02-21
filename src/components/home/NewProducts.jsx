@@ -56,7 +56,7 @@ const data = [
 ];
 
 const CardProducts = ({ product }) => (
-  <TouchableOpacity className="flex flex-col justify-between rounded-lg grow shadow-md border border-slate-300 w-[150px]  my-1 mx-1 ">
+  <TouchableOpacity className="flex flex-col justify-between rounded-lg grow sm:grow-0 shadow-md border border-slate-300 w-[160px]  my-1 mx-1 ">
     <View className="w-full">
       <Image
         className="rounded-lg"
@@ -64,7 +64,9 @@ const CardProducts = ({ product }) => (
         source={require("../../../assets/images/banner.png")}
       />
     </View>
-    <Text className="m-3">{product.title}</Text>
+    <Text numberOfLines={2} className="m-3">
+      {product.title}
+    </Text>
     <Text className="font-bold text-base mx-3 mb-3">
       {formatPrice(product.price)}
     </Text>

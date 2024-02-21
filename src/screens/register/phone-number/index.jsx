@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   requestOtpPhoneNumber,
   resetCheckRegister,
+  resetOtp,
+  resetVerifyOtp,
 } from "../../../redux/modules/register/reducer";
 
 export default function PhoneNumberRegister({
@@ -26,7 +28,7 @@ export default function PhoneNumberRegister({
   };
 
   useEffect(() => {
-    if (otp.data.success) {
+    if (otp.data?.phoneNumber?.success) {
       navigation.navigate("verify-phone-number");
       setIsPhoneNumberVisible(false);
     }
@@ -34,6 +36,8 @@ export default function PhoneNumberRegister({
 
   const handleVerify = async () => {
     try {
+      await dispatch(resetOtp());
+      await dispatch(resetVerifyOtp());
       await dispatch(
         requestOtpPhoneNumber({ phone_number: check?.data?.data.phone_number })
       );

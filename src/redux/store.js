@@ -1,4 +1,5 @@
 import { applyMiddleware } from "redux";
+import { Platform } from "react-native";
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import {
@@ -24,8 +25,9 @@ const compressor = createCompressor({
 });
 const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
-  transforms: [encryptor],
+  // transforms: [encryptor],
   key: "root",
+  // storage: Platform.OS === "web" ? storage : AsyncStorage,
   storage: AsyncStorage,
   whitelist: ["login"],
 };

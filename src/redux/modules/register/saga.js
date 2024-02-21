@@ -42,7 +42,7 @@ function* watchRequestOtpEmail(value) {
     const response = yield call(Api.checkRegister.requestOtpEmail, payload);
     const { data } = response;
     if (data.success) {
-      yield put(actions.getRequestOtpSuccess(data));
+      yield put(actions.getRequestOtpEmailSuccess(data));
     }
   } catch (e) {
     yield put(actions.isLoadingRequestOtp(false));
@@ -61,7 +61,7 @@ function* watchRequestOtpPhoneNumber(value) {
     );
     const { data } = response;
     if (data.success) {
-      yield put(actions.getRequestOtpSuccess(data));
+      yield put(actions.getRequestOtpPhoneNUmberSuccess(data));
     }
   } catch (e) {
     yield put(actions.isLoadingRequestOtp(false));
@@ -80,6 +80,9 @@ function* watchVerifyOtp(value) {
       yield put(actions.getVerifyOtpSuccess(data));
     }
   } catch (e) {
+    if (e.response.data) {
+      yield put(actions.getVerifyOtpSuccess(e.response.data));
+    }
     yield put(actions.isLoadingVerifyOtp(false));
   } finally {
     yield put(actions.isLoadingVerifyOtp(false));

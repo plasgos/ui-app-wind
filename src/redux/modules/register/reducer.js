@@ -7,7 +7,10 @@ const initialState = {
   },
   otp: {
     loading: false,
-    data: {},
+    data: {
+      email: {},
+      phoneNumber: {},
+    },
   },
   verifyOtp: {
     loading: false,
@@ -42,13 +45,32 @@ export default (state = initialState, action) => {
         ...state,
         check: initialState.check,
       };
-    case types.REQUEST_OTP_SUCCESS:
+    case types.REQUEST_OTP_EMAIL_SUCCESS:
       return {
         ...state,
         otp: {
           ...state.otp,
-          data: action.payload,
+          data: {
+            ...state.otp.data,
+            email: action.payload,
+          },
         },
+      };
+    case types.REQUEST_OTP_PHONE_NUMBER_SUCCESS:
+      return {
+        ...state,
+        otp: {
+          ...state.otp,
+          data: {
+            ...state.otp.data,
+            phoneNumber: action.payload,
+          },
+        },
+      };
+    case types.RESET_OTP:
+      return {
+        ...state,
+        otp: initialState.otp,
       };
     case types.IS_LOADING_REQUEST_OTP:
       return {
@@ -65,6 +87,11 @@ export default (state = initialState, action) => {
           ...state.verifyOtp,
           data: action.payload,
         },
+      };
+    case types.RESET_VERIFY_OTP:
+      return {
+        ...state,
+        verifyOtp: initialState.verifyOtp,
       };
     case types.IS_LOADING_VERIFY_OTP:
       return {
@@ -123,8 +150,16 @@ export const requestOtpPhoneNumber = (payload) => ({
   type: types.REQUEST_OTP_PHONE_NUMBER,
   payload,
 });
-export const getRequestOtpSuccess = (payload) => ({
-  type: types.REQUEST_OTP_SUCCESS,
+export const getRequestOtpEmailSuccess = (payload) => ({
+  type: types.REQUEST_OTP_EMAIL_SUCCESS,
+  payload,
+});
+export const getRequestOtpPhoneNUmberSuccess = (payload) => ({
+  type: types.REQUEST_OTP_PHONE_NUMBER_SUCCESS,
+  payload,
+});
+export const resetOtp = (payload) => ({
+  type: types.RESET_OTP,
   payload,
 });
 export const isLoadingRequestOtp = (payload) => ({
@@ -137,6 +172,10 @@ export const setVerifyOtp = (payload) => ({
 });
 export const getVerifyOtpSuccess = (payload) => ({
   type: types.VERIFY_OTP_SUCCESS,
+  payload,
+});
+export const resetVerifyOtp = (payload) => ({
+  type: types.RESET_VERIFY_OTP,
   payload,
 });
 export const isLoadingVerifyOtp = (payload) => ({

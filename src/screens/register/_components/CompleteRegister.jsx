@@ -1,20 +1,17 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
+import { View, Text, Platform } from "react-native";
+import React, { useEffect, useState } from "react";
 import { Card, Button, Input, Dialog } from "@rneui/themed";
 import { useForm, Controller } from "react-hook-form";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../../redux/modules/register/reducer";
+import Toast from "react-native-toast-message";
 
-export default function CompleteRegister() {
+export default function CompleteRegister({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const { verifyOtp } = useSelector((state) => state.register);
-  console.log("🚀 ~ CompleteRegister ~ verifyOtp:", verifyOtp);
-
-  const { register: redux } = useSelector((state) => state.register);
-  console.log("🚀 ~ CompleteRegister ~ verifyOtp:", redux);
-
+  const { register: dataRegister } = useSelector((state) => state.register);
   const dispatch = useDispatch();
 
   const {
@@ -29,6 +26,25 @@ export default function CompleteRegister() {
     },
   });
 
+  useEffect(() => {
+    if (dataRegister.data.success) {
+      Toast.show({
+        type: "success",
+        text1: "Daftar Akun Berhasil",
+        visibilityTime: 1000,
+      });
+      setTimeout(() => {
+        navigation.navigate("Home");
+      }, 1000);
+    } else if (dataRegister.data.success === false) {
+      Toast.show({
+        type: "error",
+        text1: "Terjadi Kesalahan, Daftar Akun Gagal",
+        visibilityTime: 1000,
+      });
+    }
+  }, [dataRegister]);
+
   const onSubmit = async ({ name, password }) => {
     console.log(name);
     await dispatch(
@@ -39,6 +55,11 @@ export default function CompleteRegister() {
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
+
+  const defaultStyle = {};
+  if (Platform.OS === "web") {
+    defaultStyle.outlineStyle = "none";
+  }
 
   return (
     <View className="flex-1 justify-center items-center w-full p-10">
@@ -55,7 +76,7 @@ export default function CompleteRegister() {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                // style={{ outlineStyle: "none" }}
+                style={defaultStyle}
                 placeholder="Nama"
                 inputStyle={{
                   fontSize: 16,
@@ -83,7 +104,7 @@ export default function CompleteRegister() {
                 onChangeText={onChange}
                 value={value}
                 secureTextEntry={showPassword ? false : true}
-                // style={{ outlineStyle: "none" }}
+                style={defaultStyle}
                 placeholder="Password"
                 inputStyle={{
                   fontSize: 16,

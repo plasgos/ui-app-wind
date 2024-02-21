@@ -1,22 +1,38 @@
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "@rneui/themed";
 import { Button } from "@rneui/themed";
 import { useDispatch, useSelector } from "react-redux";
-import { setVerifyOtp } from "../../../redux/modules/register/reducer";
+import {
+  requestOtpEmail,
+  resetOtp,
+  resetVerifyOtp,
+  setVerifyOtp,
+} from "../../../redux/modules/register/reducer";
 import { useForm, Controller } from "react-hook-form";
 import Toast from "react-native-toast-message";
+import { TouchableOpacity } from "react-native";
 
 export default function VerifyEmail({ navigation }) {
-  const { control, handleSubmit, getValues } = useForm();
+  const {
+    control,
+    handleSubmit,
+    getValues,
+    reset,
+    formState: { isValid },
+  } = useForm({
+    defaultValues: {
+      "input-0": "",
+      "input-1": "",
+      "input-2": "",
+      "input-3": "",
+      "input-4": "",
+      "input-5": "",
+    },
+  });
 
   const { check } = useSelector((state) => state.register);
-  console.log("🚀 ~ VerifyPhoneNumber ~ check:", check);
   const { verifyOtp } = useSelector((state) => state.register);
-  const { otp } = useSelector((state) => state.register);
-  console.log("🚀 ~ VerifyPhoneNumber ~ otp:", otp);
-  console.log("🚀 ~ VerifyPhoneNumber ~ verifyOtp:", verifyOtp);
-
   const dispatch = useDispatch();
 
   const inputs = Array(6)
@@ -51,6 +67,11 @@ export default function VerifyEmail({ navigation }) {
       setTimeout(() => {
         navigation.navigate("complete-register");
       }, 1000);
+    } else if (verifyOtp.data?.success === false) {
+      Toast.show({
+        type: "error",
+        text1: verifyOtp.data.message,
+      });
     }
   }, [verifyOtp]);
 
@@ -62,6 +83,7 @@ export default function VerifyEmail({ navigation }) {
         .map((key) => allValues[key])
         .join("");
 
+      await dispatch(resetVerifyOtp());
       await dispatch(
         setVerifyOtp({
           email: check?.data?.data.email,
@@ -73,18 +95,47 @@ export default function VerifyEmail({ navigation }) {
     }
   };
 
+  const handleVerify = async () => {
+    try {
+      await dispatch(resetOtp());
+      await dispatch(resetVerifyOtp());
+      await dispatch(requestOtpEmail({ email: check?.data?.data.email }));
+      reset();
+
+      if (inputs[0].current) {
+        inputs[0].current.focus();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const defaultStyle = {};
+  if (Platform.OS === "web") {
+    defaultStyle.outlineStyle = "none";
+    defaultStyle.width = "30px";
+    defaultStyle.textAlign = "center";
+    defaultStyle.flexGrow = 1;
+  }
+
   return (
-    <View className="flex-1 justify-center items-center p-10 overflow-x-hidden">
+    <View
+      style={{ overflow: "hidden" }}
+      className="flex-1 justify-center items-center p-10 overflow-x-hidden"
+    >
       <Text className="text-xl mb-3">Verifikasi Email</Text>
       <Text className="text-sm text-center text-slate-400 mb-3">
         Silahkan Masukan Kode Otp yang sudah di kirim melalui email :
         <Text className="font-semibold text-black">
           {" "}
-          {check?.data?.data.phone_number}
+          {check?.data?.data.email}
         </Text>
       </Text>
 
-      <View className="w-full  flex-row gap-x-3 overflow-x-hidden">
+      <View
+        style={{ overflow: "hidden" }}
+        className="w-full  flex-row justify-center gap-x-3 "
+      >
         {inputs.map((input, index) => (
           <Controller
             key={index}
@@ -95,9 +146,12 @@ export default function VerifyEmail({ navigation }) {
             render={({ field }) => (
               <Input
                 ref={inputs[index]}
-                style={{ outlineStyle: "none" }}
+                style={defaultStyle}
                 containerStyle={{ width: 50 }}
                 maxLength={1}
+                inputStyle={{
+                  textAlign: Platform.OS === "android" && "center",
+                }}
                 keyboardType="number-pad"
                 onChangeText={(text) => {
                   field.onChange(text);
@@ -114,6 +168,7 @@ export default function VerifyEmail({ navigation }) {
         ))}
       </View>
       <Button
+        disabled={!isValid}
         onPress={handleSubmit(handleRegister)}
         title="Verifikasi"
         buttonStyle={{
@@ -126,6 +181,13 @@ export default function VerifyEmail({ navigation }) {
           marginVertical: 10,
         }}
       />
+
+      <View className="mt-3 flex-row ">
+        <Text className="text-slate-400 ">Tidak Menerima Kode ? </Text>
+        <TouchableOpacity onPress={handleVerify}>
+          <Text className="underline text-blue-500">Kirim Ulang</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

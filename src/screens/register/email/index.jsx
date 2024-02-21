@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   requestOtpEmail,
   resetCheckRegister,
+  resetOtp,
+  resetVerifyOtp,
 } from "../../../redux/modules/register/reducer";
 
 export default function EmailRegister({
@@ -26,7 +28,7 @@ export default function EmailRegister({
   };
 
   useEffect(() => {
-    if (otp.data.success) {
+    if (otp.data?.email?.success) {
       navigation.navigate("verify-email");
       setIsEmailVisible(false);
     }
@@ -34,6 +36,8 @@ export default function EmailRegister({
 
   const handleVerify = async () => {
     try {
+      await dispatch(resetOtp());
+      await dispatch(resetVerifyOtp());
       await dispatch(requestOtpEmail({ email: check?.data?.data.email }));
     } catch (error) {
       console.log(error);

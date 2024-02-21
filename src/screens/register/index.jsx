@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import React, { useState } from "react";
 import { Card, Button, Input, Dialog } from "@rneui/themed";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -23,8 +23,7 @@ export default function Register({ navigation }) {
   const {
     control,
     handleSubmit,
-    reset,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     defaultValues: {
       value: "",
@@ -32,6 +31,12 @@ export default function Register({ navigation }) {
   });
 
   const { check } = useSelector((state) => state.register);
+  const { otp } = useSelector((state) => state.register);
+  console.log("🚀 ~ Register ~ otp:", otp);
+
+  const GLOBALSTORE = useSelector((state) => state.register);
+  console.log("🚀 ~ Register ~ GLOBALSTORE:", GLOBALSTORE);
+
   const dispatch = useDispatch();
 
   const validateEmail = (email) => {
@@ -45,8 +50,6 @@ export default function Register({ navigation }) {
   };
 
   const onSubmit = async ({ value }) => {
-    console.log(value);
-
     if (validateEmail(value)) {
       await dispatch(getCheckEmail({ email: value }));
       setIsEmailVisible(true);
@@ -65,15 +68,23 @@ export default function Register({ navigation }) {
     }
   };
 
+  const defaultStyle = {};
+  if (Platform.OS === "web") {
+    defaultStyle.outlineStyle = "none";
+  }
+
   return (
     <>
-      {/* <Image
-        containerStyle={{ width: "100%", height: 50 }}
-        source={require("../../../assets/images/plasgos.png")}
-      /> */}
-
-      <View className="flex-1 justify-center items-center bg-white p-10">
-        <Card containerStyle={{ width: "100%" }}>
+      <View className="flex-1  justify-center items-center bg-white p-10">
+        <Image
+          containerStyle={{
+            width: "100%",
+            height: 50,
+            marginHorizontal: "auto",
+          }}
+          source={require("../../../assets/images/plasgos.png")}
+        />
+        <Card containerStyle={{ width: "100%", borderRadius: 10 }}>
           <Card.Title>Daftar Akun</Card.Title>
           <Card.Divider />
           <View className="">
@@ -93,11 +104,12 @@ export default function Register({ navigation }) {
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
-                    // style={{ outlineStyle: "none" }}
+                    style={defaultStyle}
                     placeholder="Email  / No Telephone"
                     inputContainerStyle={{
                       paddingVertical: 10,
-                      borderColor: "transparent",
+                      marginBottom: Platform.OS === "web" && 12,
+                      // borderColor: "transparent",
                     }}
                     inputStyle={{
                       fontSize: 16,
@@ -117,14 +129,15 @@ export default function Register({ navigation }) {
               />
 
               <Button
+                disabled={!isValid}
                 onPress={handleSubmit(onSubmit)}
-                size="sm"
+                size="md"
                 radius={"sm"}
                 type="solid"
                 color="#fa541c"
                 titleStyle={{ fontSize: 16 }}
               >
-                Submit
+                Daftar
               </Button>
             </View>
           </View>
