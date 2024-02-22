@@ -1,6 +1,4 @@
-import { applyMiddleware } from "redux";
-import { Platform } from "react-native";
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import {
   FLUSH,
@@ -12,26 +10,35 @@ import {
   persistStore,
   persistReducer,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+
 import createCompressor from "redux-persist-transform-compress";
 import { encryptTransform } from "redux-persist-transform-encrypt";
 import rootSaga from "./sagas";
 import rootReducers from "./reducers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// import createSecureStore from "redux-persist-expo-securestore";
+// const storage = createSecureStore();
+
+// const config = {
+//   key: "root",
+//   storage,
+// };
+// const persistedSecureReducer = persistReducer(config, rootReducers);
+
 const encryptor = encryptTransform({ secretKey: "secretkey" });
 const compressor = createCompressor({
-  whitelist: ["login"],
+  whitelist: ["register"],
 });
 const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
-  // transforms: [encryptor],
+  transforms: [encryptor],
   key: "root",
-  // storage: Platform.OS === "web" ? storage : AsyncStorage,
   storage: AsyncStorage,
-  whitelist: ["login"],
+  whitelist: ["register"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducers);
+
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -41,6 +48,7 @@ export const store = configureStore({
       },
     }).concat(sagaMiddleware),
 });
+
 export const persistor = persistStore(store, { transform: [compressor] });
 
 sagaMiddleware.run(rootSaga);
