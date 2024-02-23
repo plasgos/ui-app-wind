@@ -1,9 +1,8 @@
-import { View, Text, Platform } from "react-native";
+import { View, Text, Platform, Image } from "react-native";
 import React, { useState } from "react";
 import { Card, Button, Input, Dialog } from "@rneui/themed";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Image } from "@rneui/themed";
 
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -77,13 +76,15 @@ export default function Register({ navigation }) {
     <>
       <View className="flex-1  justify-center items-center bg-white p-10">
         <Image
-          containerStyle={{
-            width: "100%",
-            height: 50,
-            marginHorizontal: "auto",
-          }}
+          style={{ width: 200, height: 60, objectFit: "contain" }}
+          // containerStyle={{
+          //   width: "100%",
+          //   height: 50,
+          //   marginHorizontal: "auto",
+          // }}
           source={require("../../../assets/images/plasgos.png")}
         />
+        <View></View>
         <Card containerStyle={{ width: "100%", borderRadius: 10 }}>
           <Card.Title>Daftar Akun</Card.Title>
           <Card.Divider />

@@ -16,24 +16,45 @@ import { encryptTransform } from "redux-persist-transform-encrypt";
 import rootSaga from "./sagas";
 import rootReducers from "./reducers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+// import secureStorage from "../lib/secureStorage";
+import { Platform } from "react-native";
+// import * as SecureStore from "expo-secure-store";
 
-// import createSecureStore from "redux-persist-expo-securestore";
-// const storage = createSecureStore();
-
-// const config = {
-//   key: "root",
-//   storage,
+// const getStorage = (key) => {
+//   console.log("🚀 ~ getStorage ~ key:", key);
+//   if (Platform.OS === "android") {
+//     return {
+//       ...secureStorage,
+//     };
+//   } else {
+//     return AsyncStorage;
+//   }
 // };
-// const persistedSecureReducer = persistReducer(config, rootReducers);
+
+// const getStorage = (key) => {
+//   if (Platform.OS === "android") {
+//     return {
+//       getItem: async () => await SecureStore.getItem(key),
+//       setItem: async () => {
+//         return { ...secureStorage };
+//       },
+//       removeItem: async () => await SecureStore.removeItem(key),
+//     };
+//   } else {
+//     return null;
+//   }
+// };
 
 const encryptor = encryptTransform({ secretKey: "secretkey" });
+
 const compressor = createCompressor({
   whitelist: ["register"],
 });
 const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
-  transforms: [encryptor],
+  transforms: Platform.OS === "web" ? [encryptor] : [],
   key: "root",
+  // storage: getStorage("register"),
   storage: AsyncStorage,
   whitelist: ["register"],
 };

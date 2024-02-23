@@ -12,6 +12,8 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import Toast from "react-native-toast-message";
 
+import * as SecureStore from "expo-secure-store";
+
 export default function VerifyPhoneNumber({ navigation }) {
   const {
     control,
@@ -118,6 +120,19 @@ export default function VerifyPhoneNumber({ navigation }) {
     defaultStyle.flexGrow = 1;
   }
 
+  // const handleGetItem = async () => {
+  //   try {
+  //     const storedValue = await SecureStore.getItemAsync("register");
+  //     if (storedValue !== null) {
+  //       console.log("Stored value:", storedValue);
+  //     } else {
+  //       console.log("No data stored under the key.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error retrieving data from SecureStore:", error);
+  //   }
+  // };
+
   return (
     <View className="flex-1 justify-center items-center p-10 overflow-x-hidden">
       <Text className="text-xl mb-3">Verifikasi No Telephone</Text>
@@ -185,6 +200,20 @@ export default function VerifyPhoneNumber({ navigation }) {
           <Text className="underline text-blue-500">Kirim Ulang</Text>
         </TouchableOpacity>
       </View>
+
+      {/* <Button
+        onPress={handleGetItem}
+        title="get item secure"
+        buttonStyle={{
+          backgroundColor: "#fa541c",
+          borderRadius: 8,
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 50,
+          marginVertical: 10,
+        }}
+      /> */}
     </View>
   );
 }
