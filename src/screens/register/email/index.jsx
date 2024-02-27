@@ -28,7 +28,7 @@ export default function EmailRegister({
   };
 
   useEffect(() => {
-    if (otp.data?.email?.success) {
+    if (otp?.data?.email?.success) {
       navigation.navigate("verify-email");
       setIsEmailVisible(false);
     }
@@ -38,7 +38,7 @@ export default function EmailRegister({
     try {
       await dispatch(resetOtp());
       await dispatch(resetVerifyOtp());
-      await dispatch(requestOtpEmail({ email: check?.data?.data.email }));
+      await dispatch(requestOtpEmail({ email: check?.data?.data?.email }));
     } catch (error) {
       console.log(error);
     }

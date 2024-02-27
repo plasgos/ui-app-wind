@@ -1,8 +1,6 @@
-import { View, Text, Platform, Image } from "react-native";
+import { View, Platform, Image } from "react-native";
 import React, { useState } from "react";
 import { Card, Button, Input, Dialog } from "@rneui/themed";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
 
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -30,12 +28,8 @@ export default function Register({ navigation }) {
   });
 
   const { check } = useSelector((state) => state.register);
-  const { otp } = useSelector((state) => state.register);
-  console.log("🚀 ~ Register ~ otp:", otp);
-
   const GLOBALSTORE = useSelector((state) => state.register);
   console.log("🚀 ~ Register ~ GLOBALSTORE:", GLOBALSTORE);
-
   const dispatch = useDispatch();
 
   const validateEmail = (email) => {

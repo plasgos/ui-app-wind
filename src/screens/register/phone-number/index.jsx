@@ -28,7 +28,7 @@ export default function PhoneNumberRegister({
   };
 
   useEffect(() => {
-    if (otp.data?.phoneNumber?.success) {
+    if (otp?.data?.phoneNumber?.success) {
       navigation.navigate("verify-phone-number");
       setIsPhoneNumberVisible(false);
     }
@@ -39,7 +39,7 @@ export default function PhoneNumberRegister({
       await dispatch(resetOtp());
       await dispatch(resetVerifyOtp());
       await dispatch(
-        requestOtpPhoneNumber({ phone_number: check?.data?.data.phone_number })
+        requestOtpPhoneNumber({ phone_number: check?.data?.data?.phone_number })
       );
     } catch (error) {
       console.log(error);

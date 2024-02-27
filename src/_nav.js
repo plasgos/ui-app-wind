@@ -35,6 +35,9 @@ export const linking = {
       Login: {
         path: "/login",
       },
+      Account: {
+        path: "/account",
+      },
       //  ... other screens
     },
   },

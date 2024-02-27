@@ -72,7 +72,7 @@ export default function TabsLayout() {
         }}
       />
       <Tab.Screen
-        name="account"
+        name="Account"
         component={Account}
         options={{
           tabBarIcon: ({ color, size }) => {

@@ -20,8 +20,6 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./src/redux/store";
 
-import "react-native-get-random-values";
-
 import Toast from "react-native-toast-message";
 
 const Stack = createNativeStackNavigator();

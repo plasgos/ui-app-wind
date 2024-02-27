@@ -13,6 +13,8 @@ import { useForm, Controller } from "react-hook-form";
 import Toast from "react-native-toast-message";
 import { TouchableOpacity } from "react-native";
 
+import { Ionicons } from "@expo/vector-icons";
+
 export default function VerifyEmail({ navigation }) {
   const {
     control,
@@ -123,9 +125,15 @@ export default function VerifyEmail({ navigation }) {
       style={{ overflow: "hidden" }}
       className="flex-1 justify-center items-center p-10 overflow-x-hidden"
     >
-      <Text className="text-xl mb-3">Verifikasi Email</Text>
+      <Text className="text-xl mb-3">Masukan Kode Verifikasi</Text>
+      <Ionicons
+        style={{ marginBottom: 10 }}
+        name="mail"
+        size={36}
+        color="black"
+      />
       <Text className="text-sm text-center text-slate-400 mb-3">
-        Silahkan Masukan Kode Otp yang sudah di kirim melalui email :
+        Kode Verifikasi Sudah Di Kirim Melalui Email Ke :
         <Text className="font-semibold text-black">
           {" "}
           {check?.data?.data.email}
@@ -183,9 +191,11 @@ export default function VerifyEmail({ navigation }) {
       />
 
       <View className="mt-3 flex-row ">
-        <Text className="text-slate-400 ">Tidak Menerima Kode ? </Text>
+        <Text className="text-slate-400 ">
+          Tidak Menerima Kode Verifikasi ?{" "}
+        </Text>
         <TouchableOpacity onPress={handleVerify}>
-          <Text className="underline text-blue-500">Kirim Ulang</Text>
+          <Text className="underline text-[#fa541c]">Kirim Ulang</Text>
         </TouchableOpacity>
       </View>
     </View>

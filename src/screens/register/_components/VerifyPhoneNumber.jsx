@@ -11,8 +11,7 @@ import {
 } from "../../../redux/modules/register/reducer";
 import { useForm, Controller } from "react-hook-form";
 import Toast from "react-native-toast-message";
-
-import * as SecureStore from "expo-secure-store";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function VerifyPhoneNumber({ navigation }) {
   const {
@@ -58,6 +57,32 @@ export default function VerifyPhoneNumber({ navigation }) {
     }
   };
 
+  const maskPhoneNumber = (phoneNumber) => {
+    if (!phoneNumber || phoneNumber.length < 10) {
+      return "";
+    }
+
+    // Bagian pertama
+    const firstPart = phoneNumber.substring(0, phoneNumber.length - 8);
+    // Bagian kedua
+    const secondPart = phoneNumber.substring(
+      phoneNumber.length - 8,
+      phoneNumber.length - 4
+    );
+    // Bagian ketiga
+    const thirdPart = phoneNumber.substring(
+      phoneNumber.length - 4,
+      phoneNumber.length - 2
+    );
+    // Bagian keempat
+    const fourthPart = phoneNumber.substring(phoneNumber.length - 2);
+
+    // Gabungkan semua bagian dengan bintang di antaranya
+    return `${"*".repeat(firstPart.length)}_${"*".repeat(
+      secondPart.length
+    )}_${"*".repeat(thirdPart.length)}${fourthPart}`;
+  };
+
   useEffect(() => {
     if (verifyOtp.data.success) {
       Toast.show({
@@ -87,7 +112,7 @@ export default function VerifyPhoneNumber({ navigation }) {
       await dispatch(resetVerifyOtp());
       await dispatch(
         setVerifyOtp({
-          phone_number: check?.data?.data.phone_number,
+          phone_number: check?.data?.data?.phone_number,
           otp_code: combinedValue,
         })
       );
@@ -101,7 +126,7 @@ export default function VerifyPhoneNumber({ navigation }) {
       await dispatch(resetOtp());
       await dispatch(resetVerifyOtp());
       await dispatch(
-        requestOtpPhoneNumber({ phone_number: check?.data?.data.phone_number })
+        requestOtpPhoneNumber({ phone_number: check?.data?.data?.phone_number })
       );
       reset();
       if (inputs[0].current) {
@@ -120,27 +145,21 @@ export default function VerifyPhoneNumber({ navigation }) {
     defaultStyle.flexGrow = 1;
   }
 
-  // const handleGetItem = async () => {
-  //   try {
-  //     const storedValue = await SecureStore.getItemAsync("register");
-  //     if (storedValue !== null) {
-  //       console.log("Stored value:", storedValue);
-  //     } else {
-  //       console.log("No data stored under the key.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error retrieving data from SecureStore:", error);
-  //   }
-  // };
-
   return (
     <View className="flex-1 justify-center items-center p-10 overflow-x-hidden">
-      <Text className="text-xl mb-3">Verifikasi No Telephone</Text>
+      <Text className="text-xl mb-3">Masukan Kode Verifikasi</Text>
+      <Ionicons
+        style={{ marginBottom: 10 }}
+        name="chatbox-ellipses-outline"
+        size={36}
+        color="black"
+      />
+
       <Text className="text-sm text-center text-slate-400 mb-3">
-        Silahkan Masukan Kode Otp yang sudah di kirim melalui pesan ke :
+        Kode Verifikasi Sudah Di Kirim Melalui Pesan Ke :
         <Text className="font-semibold text-black">
           {" "}
-          {check?.data?.data.phone_number}
+          {maskPhoneNumber(check?.data?.data.phone_number)}
         </Text>
       </Text>
 
@@ -195,25 +214,13 @@ export default function VerifyPhoneNumber({ navigation }) {
       />
 
       <View className="mt-3 flex-row ">
-        <Text className="text-slate-400 ">Tidak Menerima Kode ? </Text>
+        <Text className="text-slate-400 ">
+          Tidak Menerima Kode Verifikasi ?{" "}
+        </Text>
         <TouchableOpacity onPress={handleVerify}>
-          <Text className="underline text-blue-500">Kirim Ulang</Text>
+          <Text className="underline text-[#fa541c]">Kirim Ulang</Text>
         </TouchableOpacity>
       </View>
-
-      {/* <Button
-        onPress={handleGetItem}
-        title="get item secure"
-        buttonStyle={{
-          backgroundColor: "#fa541c",
-          borderRadius: 8,
-        }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 50,
-          marginVertical: 10,
-        }}
-      /> */}
     </View>
   );
 }
