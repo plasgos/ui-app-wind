@@ -1,6 +1,7 @@
-import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React from 'react';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const FindYourItem = () => {
   return (
@@ -14,8 +15,8 @@ const FindYourItem = () => {
       <View className="w-100 bg-white py-3 px-3">
         <Image
           className="rounded-lg"
-          style={{ width: "100%" }}
-          source={require("../../../assets/images/banner.png")}
+          style={{width: '100%'}}
+          source={require('../../../assets/images/banner.png')}
         />
       </View>
       <View className="flex-row justify-end bg-white pb-3 px-3">

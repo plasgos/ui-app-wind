@@ -1,21 +1,19 @@
-import React from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import React from 'react';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 
-import { Entypo } from "@expo/vector-icons";
+import Entypo from 'react-native-vector-icons/Entypo';
+
+// import {Entypo} from '@expo/vector-icons';
 
 const listStore = [
-  { title: "Kios Jajan", location: "Bandung" },
-  { title: "Tokozstore", location: "Aceh Utara" },
-  { title: "HCS-Collection", location: "Sleman" },
-  { title: "Sentra Konveksi Kolor", location: "Jepara" },
-  { title: "Berkah Furniture", location: "Bantul" },
-  { title: "Kiraina Ms Glow", location: "Malang" },
-  { title: "OurShoes_2", location: "Bekasi" },
+  {title: 'Kios Jajan', location: 'Bandung'},
+  {title: 'Tokozstore', location: 'Aceh Utara'},
+  {title: 'HCS-Collection', location: 'Sleman'},
+  {title: 'Sentra Konveksi Kolor', location: 'Jepara'},
+  {title: 'Berkah Furniture', location: 'Bantul'},
+  {title: 'Kiraina Ms Glow', location: 'Malang'},
+  {title: 'OurShoes_2', location: 'Bekasi'},
 ];
-
-function Icons(props) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
 
 const RecomendedStore = () => {
   return (
@@ -25,18 +23,16 @@ const RecomendedStore = () => {
       </Text>
       <ScrollView
         className="w-100 bg-white py-3 px-3 gap-x-3 "
-        horizontal={true}
-      >
+        horizontal={true}>
         {listStore.map((store, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => {}}
-            className="flex flex-col justify-between w-[120px] p-2 border border-slate-300 rounded-lg "
-          >
+            className="flex flex-col justify-between w-[120px] p-2 border border-slate-300 rounded-lg ">
             <View className="mb-2 mt-2 mx-auto text-center text-slate-400">
               <Image
-                style={{ width: 80, height: 80 }}
-                source={require("../../../assets/images/store.png")}
+                style={{width: 80, height: 80}}
+                source={require('../../../assets/images/store.png')}
               />
             </View>
             <Text className=" text-xs  mb-3 ">{store.title}</Text>

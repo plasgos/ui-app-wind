@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FontAwesome } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import React, {useEffect, useRef, useState} from 'react';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {
   SafeAreaView,
@@ -8,10 +8,10 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-} from "react-native";
+} from 'react-native';
 
-const SearchBar = ({ navigation }) => {
-  const [text, setText] = useState("");
+const SearchBar = ({navigation}) => {
+  const [text, setText] = useState('');
 
   const inputRef = useRef(null);
 
@@ -20,7 +20,7 @@ const SearchBar = ({ navigation }) => {
     inputRef.current.focus();
   }, []);
 
-  const handleInputChange = (inputText) => {
+  const handleInputChange = inputText => {
     setText(inputText);
   };
 

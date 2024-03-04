@@ -1,67 +1,68 @@
-import React from "react";
-import { Image, Text, View, TouchableOpacity } from "react-native";
+import React from 'react';
+import {Image, Text, View, TouchableOpacity} from 'react-native';
 
-import { EvilIcons } from "@expo/vector-icons";
-import { formatPrice } from "../../lib/format-price";
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
+
+import {formatPrice} from '../../lib/format-price';
 
 const data = [
   {
     // image: require("../../../assets/images/banner.png"),
-    title: "Parfum Ucok Baba",
+    title: 'Parfum Ucok Baba',
     price: 70000,
-    location: "Depok",
+    location: 'Depok',
     isGrosir: false,
     isCashback: false,
   },
   {
     // image: require("../../../assets/images/banner.png"),
-    title: "Tas Selempang Pria Waistbag Slingbag Tas ",
+    title: 'Tas Selempang Pria Waistbag Slingbag Tas ',
     price: 170000,
-    location: "Bogor",
+    location: 'Bogor',
     isGrosir: false,
     isCashback: false,
   },
   {
     // image: require("../../../assets/images/banner.png"),
-    title: "Susu Kambing Etamilku isi 10 Saset",
+    title: 'Susu Kambing Etamilku isi 10 Saset',
     price: 70000,
-    location: "Depok",
+    location: 'Depok',
     isGrosir: true,
     isCashback: true,
   },
   {
     // image: require("../../../assets/images/banner.png"),
-    title: "Sambal teri khas singkawang",
+    title: 'Sambal teri khas singkawang',
     price: 19000,
-    location: "Jakarta",
+    location: 'Jakarta',
     isGrosir: false,
     isCashback: false,
   },
   {
     // image: require("../../../assets/images/banner.png"),
-    title: "Berkah furniture jogja",
+    title: 'Berkah furniture jogja',
     price: 3500,
-    location: "Bantul",
+    location: 'Bantul',
     isGrosir: false,
     isCashback: false,
   },
   {
     // image: require("../../../assets/images/banner.png"),
-    title: "Parfum Ucok Baba",
+    title: 'Parfum Ucok Baba',
     price: 70000,
-    location: "Depok",
+    location: 'Depok',
     isGrosir: false,
     isCashback: false,
   },
 ];
 
-const CardProducts = ({ product }) => (
+const CardProducts = ({product}) => (
   <TouchableOpacity className="flex flex-col justify-between rounded-lg grow sm:grow-0 shadow-md border border-slate-300 w-[160px]  my-1 mx-1 ">
     <View className="w-full">
       <Image
         className="rounded-lg"
-        style={{ width: "100%", height: 120 }}
-        source={require("../../../assets/images/banner.png")}
+        style={{width: '100%', height: 120}}
+        source={require('../../../assets/images/banner.png')}
       />
     </View>
     <Text numberOfLines={2} className="m-3">

@@ -1,85 +1,90 @@
-import { View, Platform, Image } from "react-native";
-import React, { useState } from "react";
-import { Card, Button, Input, Dialog } from "@rneui/themed";
+/* eslint-disable prettier/prettier */
+import {View, Platform, Image} from 'react-native';
+import React, {useState} from 'react';
+import {Card, Button, Input, Dialog} from '@rneui/themed';
 
-import { MaterialIcons } from "@expo/vector-icons";
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import { useForm, Controller } from "react-hook-form";
-import Toast from "react-native-toast-message";
-import { useDispatch, useSelector } from "react-redux";
+import {useForm, Controller} from 'react-hook-form';
+import Toast from 'react-native-toast-message';
+import {useDispatch, useSelector} from 'react-redux';
+// import {
+//   getCheckEmail,
+//   getCheckPhoneNumber,
+// } from '../../redux/modules/register/reducer';
+import EmailRegister from './email';
+import PhoneNumberRegister from './phone-number';
 import {
   getCheckEmail,
   getCheckPhoneNumber,
-} from "../../redux/modules/register/reducer";
-import EmailRegister from "./email";
-import PhoneNumberRegister from "./phone-number";
+} from '../../redux/modules/register/reducer';
 
-export default function Register({ navigation }) {
+export default function Register({navigation}) {
   const [isEmailVisible, setIsEmailVisible] = useState(false);
   const [isPhoneNumberVisible, setIsPhoneNumberVisible] = useState(false);
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: {errors, isValid},
   } = useForm({
     defaultValues: {
-      value: "",
+      value: '',
     },
   });
 
-  const { check } = useSelector((state) => state.register);
-  const GLOBALSTORE = useSelector((state) => state.register);
-  console.log("🚀 ~ Register ~ GLOBALSTORE:", GLOBALSTORE);
+  const {check} = useSelector(state => state.register);
+  const GLOBALSTORE = useSelector(state => state.register);
+  console.log('🚀 ~ Register ~ GLOBALSTORE:', GLOBALSTORE);
   const dispatch = useDispatch();
 
-  const validateEmail = (email) => {
+  const validateEmail = email => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
 
-  const validatePhoneNumber = (phoneNumber) => {
+  const validatePhoneNumber = phoneNumber => {
     const regex = /^(08|628)\d{5,15}$/;
     return regex.test(phoneNumber);
   };
 
-  const onSubmit = async ({ value }) => {
+  const onSubmit = async ({value}) => {
     if (validateEmail(value)) {
-      await dispatch(getCheckEmail({ email: value }));
+      await dispatch(getCheckEmail({email: value}));
       setIsEmailVisible(true);
       setIsPhoneNumberVisible(false);
     } else if (validatePhoneNumber(value)) {
-      await dispatch(getCheckPhoneNumber({ phoneNumber: value }));
+      await dispatch(getCheckPhoneNumber({phoneNumber: value}));
       setIsPhoneNumberVisible(true);
       setIsEmailVisible(false);
     } else {
       Toast.show({
-        type: "error",
-        text1: "Format Tidak Sesuai",
+        type: 'error',
+        text1: 'Format Tidak Sesuai',
         text2:
-          "Silahkan Masukan Email / No Telephone Dengan Format Yang Sesuai",
+          'Silahkan Masukan Email / No Telephone Dengan Format Yang Sesuai',
       });
     }
   };
 
   const defaultStyle = {};
-  if (Platform.OS === "web") {
-    defaultStyle.outlineStyle = "none";
+  if (Platform.OS === 'web') {
+    defaultStyle.outlineStyle = 'none';
   }
 
   return (
     <>
       <View className="flex-1  justify-center items-center bg-white p-10">
         <Image
-          style={{ width: 200, height: 60, objectFit: "contain" }}
+          style={{width: 200, height: 60, objectFit: 'contain'}}
           // containerStyle={{
           //   width: "100%",
           //   height: 50,
           //   marginHorizontal: "auto",
           // }}
-          source={require("../../../assets/images/plasgos.png")}
+          source={require('../../../assets/images/plasgos.png')}
         />
         <View></View>
-        <Card containerStyle={{ width: "100%", borderRadius: 10 }}>
+        <Card containerStyle={{width: '100%', borderRadius: 10}}>
           <Card.Title>Daftar Akun</Card.Title>
           <Card.Divider />
           <View className="">
@@ -93,9 +98,9 @@ export default function Register({ navigation }) {
                 rules={{
                   required: true,
                 }}
-                render={({ field: { onChange, onBlur, value } }) => (
+                render={({field: {onChange, onBlur, value}}) => (
                   <Input
-                    errorMessage={errors.value && "Form Harus Di Isi."}
+                    errorMessage={errors.value && 'Form Harus Di Isi.'}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
@@ -103,7 +108,7 @@ export default function Register({ navigation }) {
                     placeholder="Email  / No Telephone"
                     inputContainerStyle={{
                       paddingVertical: 10,
-                      marginBottom: Platform.OS === "web" && 12,
+                      marginBottom: Platform.OS === 'web' && 12,
                       // borderColor: "transparent",
                     }}
                     inputStyle={{
@@ -127,11 +132,10 @@ export default function Register({ navigation }) {
                 disabled={!isValid}
                 onPress={handleSubmit(onSubmit)}
                 size="md"
-                radius={"sm"}
+                radius={'sm'}
                 type="solid"
                 color="#fa541c"
-                titleStyle={{ fontSize: 16 }}
-              >
+                titleStyle={{fontSize: 16}}>
                 Daftar
               </Button>
             </View>
