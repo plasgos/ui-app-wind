@@ -19,6 +19,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {store, persistor} from './src/redux/store';
+import {NativeWindStyleSheet} from 'nativewind';
 
 import Toast from 'react-native-toast-message';
 
@@ -26,78 +27,80 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <NavigationContainer
-          //  linking={linking}
-          >
-            <Stack.Navigator>
-              <Stack.Screen
-                name="Home"
-                component={BottomTabs}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="search"
-                component={Search}
-                options={({navigation}) => ({
-                  header: () => <SearchBar navigation={navigation} />,
-                })}
-              />
-              <Stack.Screen name="cart" component={Cart} />
-              <Stack.Screen name="message" component={Message} />
-              <Stack.Screen
-                name="Register"
-                component={Register}
-                options={({navigation}) => ({
-                  headerTitle: 'Daftar',
-                  headerLeft: () => (
-                    <AntDesign
-                      style={{marginHorizontal: 11}}
-                      onPress={() => navigation.navigate('Home')}
-                      name="arrowleft"
-                      size={24}
-                      color="black"
-                    />
-                  ),
-                })}
-              />
-              <Stack.Screen
-                name="email"
-                component={EmailRegister}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="phone-number"
-                component={PhoneNumber}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="verify-email"
-                component={VerifyEmail}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="verify-phone-number"
-                component={VerifyPhoneNumber}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="complete-register"
-                component={CompleteRegister}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="Login"
-                component={Login}
-                options={{headerShown: false}}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
-          <Toast />
-        </PersistGate>
-      </Provider>
-    </>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer
+        //  linking={linking}
+        >
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Home"
+              component={BottomTabs}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="search"
+              component={Search}
+              options={({navigation}) => ({
+                header: () => <SearchBar navigation={navigation} />,
+              })}
+            />
+            <Stack.Screen name="cart" component={Cart} />
+            <Stack.Screen name="message" component={Message} />
+            <Stack.Screen
+              name="Register"
+              component={Register}
+              options={({navigation}) => ({
+                headerTitle: 'Daftar',
+                headerLeft: () => (
+                  <AntDesign
+                    style={{marginHorizontal: 11}}
+                    onPress={() => navigation.navigate('Home')}
+                    name="arrowleft"
+                    size={24}
+                    color="black"
+                  />
+                ),
+              })}
+            />
+            <Stack.Screen
+              name="email"
+              component={EmailRegister}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="phone-number"
+              component={PhoneNumber}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="verify-email"
+              component={VerifyEmail}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="verify-phone-number"
+              component={VerifyPhoneNumber}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="complete-register"
+              component={CompleteRegister}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{headerShown: false}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <Toast />
+      </PersistGate>
+    </Provider>
   );
 }
+
+NativeWindStyleSheet.setOutput({
+  default: 'native',
+});
