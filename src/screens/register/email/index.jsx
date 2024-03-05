@@ -1,13 +1,13 @@
-import { View, Text } from "react-native";
-import React, { useEffect } from "react";
-import { Dialog } from "@rneui/themed";
-import { useDispatch, useSelector } from "react-redux";
+import {View, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {Dialog} from '@rneui/themed';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   requestOtpEmail,
   resetCheckRegister,
   resetOtp,
   resetVerifyOtp,
-} from "../../../redux/modules/register/reducer";
+} from '../../../redux/modules/register/reducer';
 
 export default function EmailRegister({
   isEmailVisible,
@@ -15,7 +15,7 @@ export default function EmailRegister({
   check,
   navigation,
 }) {
-  const { otp } = useSelector((state) => state.register);
+  const {otp} = useSelector(state => state.register);
   const dispatch = useDispatch();
 
   const handleCancel = () => {
@@ -23,22 +23,22 @@ export default function EmailRegister({
   };
 
   const handleLogin = () => {
-    navigation.navigate("Login");
+    navigation.navigate('Login');
     setIsEmailVisible(false);
   };
 
   useEffect(() => {
     if (otp?.data?.email?.success) {
-      navigation.navigate("verify-email");
+      navigation.navigate('verify-email');
       setIsEmailVisible(false);
     }
-  }, [otp]);
+  }, [navigation, otp, setIsEmailVisible]);
 
   const handleVerify = async () => {
     try {
       await dispatch(resetOtp());
       await dispatch(resetVerifyOtp());
-      await dispatch(requestOtpEmail({ email: check?.data?.data?.email }));
+      await dispatch(requestOtpEmail({email: check?.data?.data?.email}));
     } catch (error) {
       console.log(error);
     }
@@ -53,29 +53,29 @@ export default function EmailRegister({
       {check && check.data && check.data.registered && (
         <Dialog>
           <Dialog.Title
-            titleStyle={{ textAlign: "center" }}
+            titleStyle={{textAlign: 'center'}}
             title={`Email Sudah Terdaftar`}
           />
           <Text className="my-3">
-            Masuk dengan email ini{" "}
+            Masuk dengan email ini{' '}
             <Text className="font-bold">{check?.data?.data.email}</Text> ?
           </Text>
           <Dialog.Actions>
             <Dialog.Button
               title="Ya"
               type="solid"
-              radius={"md"}
+              radius={'md'}
               color="#fa541c"
-              containerStyle={{ flex: 1 }}
+              containerStyle={{flex: 1}}
               onPress={handleLogin}
             />
             <Dialog.Button
               type="outline"
-              radius={"md"}
+              radius={'md'}
               title="Tidak"
-              titleStyle={{ color: "#fa541c" }}
-              buttonStyle={{ borderColor: "#fa541c" }}
-              containerStyle={{ flex: 1, marginRight: 10 }}
+              titleStyle={{color: '#fa541c'}}
+              buttonStyle={{borderColor: '#fa541c'}}
+              containerStyle={{flex: 1, marginRight: 10}}
               onPress={handleCancel}
             />
           </Dialog.Actions>
@@ -85,7 +85,7 @@ export default function EmailRegister({
       {check && check.data && check.data.registered === false && (
         <Dialog>
           <Dialog.Title
-            titleStyle={{ textAlign: "center" }}
+            titleStyle={{textAlign: 'center'}}
             title={check?.data?.data.email}
           />
           <Text className="my-3">
@@ -95,18 +95,18 @@ export default function EmailRegister({
             <Dialog.Button
               title="Ya, Benar"
               type="solid"
-              radius={"md"}
+              radius={'md'}
               color="#fa541c"
-              containerStyle={{ flex: 1 }}
+              containerStyle={{flex: 1}}
               onPress={handleVerify}
             />
             <Dialog.Button
               type="outline"
-              radius={"md"}
+              radius={'md'}
               title="Ubah"
-              titleStyle={{ color: "#fa541c" }}
-              buttonStyle={{ borderColor: "#fa541c" }}
-              containerStyle={{ flex: 1, marginRight: 10 }}
+              titleStyle={{color: '#fa541c'}}
+              buttonStyle={{borderColor: '#fa541c'}}
+              containerStyle={{flex: 1, marginRight: 10}}
               onPress={handleCancel}
             />
           </Dialog.Actions>
