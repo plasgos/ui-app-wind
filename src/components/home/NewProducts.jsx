@@ -89,8 +89,8 @@ const NewProducts = () => {
         </Text>
       </View>
       <View className="flex-row flex-wrap  ">
-        {data.map((data, index) => (
-          <CardProducts key={index} product={data} />
+        {data.map((datas, index) => (
+          <CardProducts key={index} product={datas} />
         ))}
       </View>
     </View>

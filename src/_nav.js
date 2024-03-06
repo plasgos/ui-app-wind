@@ -1,43 +1,24 @@
-import * as Linking from "expo-linking";
-
-// import HomeScreen from "./screens/home";
-// import RegisterScreen from "./screens/register";
-
-// export default [
-//   {
-//     name: "Home",
-//     component: HomeScreen,
-//     options: {
-//       headerShown: false,
-//       title: "Plasgos | B2B Marketplace Indonesia",
-//     },
-//   },
-//   {
-//     name: "Register",
-//     component: RegisterScreen,
-//     options: {
-//       headerShown: false,
-//       title: "Daftar Plasgos",
-//     },
-//   },
-// ];
-
 export const linking = {
-  prefixes: [Linking.createURL("/")], // this is the prefix for our app. Could be anything eg https://myapp.com
+  prefixes: ['http://localhost:8080'],
   config: {
     screens: {
       Home: {
-        path: "/",
+        path: '',
+        initialRouteName: '/',
+        screens: {
+          homepage: '',
+          notifications: '/notifications',
+          rfq: '/rfq',
+          whislist: '/whislist',
+          Account: '/Account',
+        },
       },
       Register: {
-        path: "/register",
+        path: '/register',
+        exact: true,
       },
-      Login: {
-        path: "/login",
-      },
-      Account: {
-        path: "/account",
-      },
+      Login: '/login',
+      Account: '/account',
       //  ... other screens
     },
   },

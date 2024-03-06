@@ -1,10 +1,8 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import {Platform} from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-// import {FontAwesome} from '@expo/vector-icons';
 
 import HeaderHomeScreen from '../components/home/HeaderHomeScreen';
 import Home from '../screens/home';
@@ -34,7 +32,7 @@ export default function TabsLayout() {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
-        name="homescreen"
+        name="homepage"
         component={Home}
         options={({navigation}) => ({
           tabBarIcon: ({color, size}) => {

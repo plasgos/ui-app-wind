@@ -1,7 +1,10 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  createNavigationContainerRef,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-// import _nav, {linking} from './src/_nav';
+import {linking} from './src/_nav';
 import BottomTabs from './src/tabs/index';
 import Search from './src/screens/search';
 import SearchBar from './src/components/home/SearchBar';
@@ -15,23 +18,22 @@ import VerifyPhoneNumber from './src/screens/register/_components/VerifyPhoneNum
 import CompleteRegister from './src/screens/register/_components/CompleteRegister';
 import Login from './src/screens/login';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-// import {AntDesign} from '@expo/vector-icons';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {store, persistor} from './src/redux/store';
 import {NativeWindStyleSheet} from 'nativewind';
+import {Platform} from 'react-native';
 
 import Toast from 'react-native-toast-message';
 
 const Stack = createNativeStackNavigator();
+const navigationRef = createNavigationContainerRef();
 
 export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <NavigationContainer
-        //  linking={linking}
-        >
+        <NavigationContainer linking={linking} ref={navigationRef}>
           <Stack.Navigator>
             <Stack.Screen
               name="Home"
@@ -54,7 +56,11 @@ export default function App() {
                 headerTitle: 'Daftar',
                 headerLeft: () => (
                   <AntDesign
-                    style={{marginHorizontal: 11}}
+                    style={
+                      Platform.OS === 'web'
+                        ? {marginHorizontal: 10}
+                        : {marginRight: 15}
+                    }
                     onPress={() => navigation.navigate('Home')}
                     name="arrowleft"
                     size={24}
