@@ -20,8 +20,9 @@ module.exports = {
     app: path.join(__dirname, 'index.web.js'),
   },
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
+    // path: path.join(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].bundle.js',
     clean: true,
   },
   resolve: {
