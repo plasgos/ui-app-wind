@@ -8,8 +8,8 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "build": "rm -rf dist/ && webpack --mode=production --config webpack.config.js",
-    "web": "webpack serve --mode=development --config webpack.config.js"
+    "build": "rm -rf dist/ && webpack --config webpack.prod.js",
+    "web": "webpack serve --open --config webpack.dev.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.21.0",
@@ -63,7 +63,8 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.2"
+    "webpack-dev-server": "^5.0.2",
+    "webpack-merge": "^5.10.0"
   },
   "engines": {
     "node": ">=18"

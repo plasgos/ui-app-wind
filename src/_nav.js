@@ -7,10 +7,10 @@ export const linking = {
         initialRouteName: '/',
         screens: {
           homepage: '',
-          notifications: '/notifications',
-          rfq: '/rfq',
-          whislist: '/whislist',
-          Account: '/Account',
+          notifications: 'notifications',
+          rfq: 'rfq',
+          whislist: 'whislist',
+          Account: 'account',
         },
       },
       Register: {
@@ -18,7 +18,7 @@ export const linking = {
         exact: true,
       },
       Login: '/login',
-      Account: '/account',
+      // Account: '/account',
       //  ... other screens
     },
   },
