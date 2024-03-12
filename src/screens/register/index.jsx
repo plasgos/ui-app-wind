@@ -83,7 +83,6 @@ export default function Register({navigation}) {
           // }}
           source={require('../../../assets/images/plasgos.png')}
         />
-        <View></View>
         <Card containerStyle={{width: '100%', borderRadius: 10}}>
           <Card.Title>Daftar Akun</Card.Title>
           <Card.Divider />

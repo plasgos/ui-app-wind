@@ -47,13 +47,26 @@ export default function App() {
                 header: () => <SearchBar navigation={navigation} />,
               })}
             />
-            <Stack.Screen name="cart" component={Cart} />
-            <Stack.Screen name="message" component={Message} />
+            <Stack.Screen
+              name="cart"
+              component={Cart}
+              options={{
+                headerTitleAlign: 'center',
+              }}
+            />
+            <Stack.Screen
+              name="message"
+              component={Message}
+              options={{
+                headerTitleAlign: 'center',
+              }}
+            />
             <Stack.Screen
               name="Register"
               component={Register}
               options={({navigation}) => ({
                 headerTitle: 'Daftar',
+                headerTitleAlign: 'center',
                 headerLeft: () => (
                   <AntDesign
                     style={

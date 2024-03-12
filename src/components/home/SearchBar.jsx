@@ -1,17 +1,14 @@
 import React, {useEffect, useRef, useState} from 'react';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import {
-  SafeAreaView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Platform, SafeAreaView, TouchableOpacity} from 'react-native';
+import {SearchBar} from '@rneui/themed';
 
-const SearchBar = ({navigation}) => {
-  const [text, setText] = useState('');
+const SearchBarComponent = ({navigation}) => {
+  const [search, setSearch] = useState('');
+  const updateSearch = searchValue => {
+    setSearch(searchValue);
+  };
 
   const inputRef = useRef(null);
 
@@ -20,30 +17,35 @@ const SearchBar = ({navigation}) => {
     inputRef.current.focus();
   }, []);
 
-  const handleInputChange = inputText => {
-    setText(inputText);
-  };
-
   return (
-    <SafeAreaView className="flex flex-row items-center gap-x-3 p-3 bg-white  ">
-      <TouchableOpacity onPress={() => navigation.goBack()} className="mr-2">
-        <AntDesign name="arrowleft" size={24} color="black" />
+    <SafeAreaView className="m-1 pl-3 flex flex-row gap-x-3 items-center ">
+      <TouchableOpacity onPress={() => navigation.goBack()} className="mr-1">
+        <AntDesign name="arrowleft" size={24} color="#86939E" />
       </TouchableOpacity>
-
-      <View className="absolute left-16 text-slate-300">
-        <FontAwesome name="search" size={24} color="#cbd2d9" />
-      </View>
-
-      <TextInput
+      <SearchBar
         ref={inputRef}
-        className="flex-1 h-[40] w-100  border-2 border-slate-300  py-3  px-10 rounded-lg "
-        placeholder="Cari Kebutuhan anda"
-        placeholderTextColor="#718096"
-        onChangeText={handleInputChange}
-        value={text}
+        lightTheme
+        placeholder="Cari Kebutuhan Anda"
+        containerStyle={{
+          backgroundColor: 'transparent',
+          borderTopWidth: 0,
+          borderBottomWidth: 0,
+          flexGrow: 1,
+        }}
+        inputContainerStyle={{
+          backgroundColor: 'transparent',
+          borderWidth: 1,
+          borderBottomWidth: 1,
+          borderRadius: 8,
+          height: 40,
+        }}
+        inputStyle={{fontSize: 14}}
+        style={Platform.OS === 'web' && {outlineStyle: 'none'}}
+        onChangeText={updateSearch}
+        value={search}
       />
     </SafeAreaView>
   );
 };
 
-export default SearchBar;
+export default SearchBarComponent;
