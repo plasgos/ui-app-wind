@@ -1,14 +1,14 @@
-import { put, call, takeLatest } from "redux-saga/effects";
-import Api from "../../../services";
-import types from "./types";
-import * as actions from "./reducer";
+import {put, call, takeLatest} from 'redux-saga/effects';
+import Api from '../../../services';
+import types from './types';
+import * as actions from './reducer';
 
 function* watchCheckEmail(value) {
   yield put(actions.isLoadingCheckRegister(true));
-  const { payload } = value;
+  const {payload} = value;
   try {
     const response = yield call(Api.checkRegister.email, payload);
-    const { data } = response;
+    const {data} = response;
     if (data.success) {
       yield put(actions.getCheckRegisterSuccess(data));
     }
@@ -21,10 +21,10 @@ function* watchCheckEmail(value) {
 
 function* watchCheckPhoneNumber(value) {
   yield put(actions.isLoadingCheckRegister(true));
-  const { payload } = value;
+  const {payload} = value;
   try {
     const response = yield call(Api.checkRegister.phoneNumber, payload);
-    const { data } = response;
+    const {data} = response;
     if (data.success) {
       yield put(actions.getCheckRegisterSuccess(data));
     }
@@ -37,10 +37,10 @@ function* watchCheckPhoneNumber(value) {
 
 function* watchRequestOtpEmail(value) {
   yield put(actions.isLoadingRequestOtp(true));
-  const { payload } = value;
+  const {payload} = value;
   try {
     const response = yield call(Api.checkRegister.requestOtpEmail, payload);
-    const { data } = response;
+    const {data} = response;
     if (data.success) {
       yield put(actions.getRequestOtpEmailSuccess(data));
     }
@@ -53,13 +53,13 @@ function* watchRequestOtpEmail(value) {
 
 function* watchRequestOtpPhoneNumber(value) {
   yield put(actions.isLoadingRequestOtp(true));
-  const { payload } = value;
+  const {payload} = value;
   try {
     const response = yield call(
       Api.checkRegister.requestOtpPhoneNumber,
-      payload
+      payload,
     );
-    const { data } = response;
+    const {data} = response;
     if (data.success) {
       yield put(actions.getRequestOtpPhoneNUmberSuccess(data));
     }
@@ -72,10 +72,10 @@ function* watchRequestOtpPhoneNumber(value) {
 
 function* watchVerifyOtp(value) {
   yield put(actions.isLoadingVerifyOtp(true));
-  const { payload } = value;
+  const {payload} = value;
   try {
     const response = yield call(Api.checkRegister.verifyOtp, payload);
-    const { data } = response;
+    const {data} = response;
     if (data.success) {
       yield put(actions.getVerifyOtpSuccess(data));
     }
@@ -91,10 +91,10 @@ function* watchVerifyOtp(value) {
 
 function* watchRegister(value) {
   yield put(actions.isLoadingRegister(true));
-  const { payload } = value;
+  const {payload} = value;
   try {
     const response = yield call(Api.checkRegister.register, payload);
-    const { data } = response;
+    const {data} = response;
     if (data.success) {
       yield put(actions.registerSuccess(data));
     }

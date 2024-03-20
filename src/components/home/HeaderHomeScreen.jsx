@@ -32,11 +32,11 @@ const HeaderHomeScreen = ({navigation}) => {
         className="text-slate-400 mt-0.5">
         <Ionicons name="chatbox-ellipses-outline" size={26} color="#cbd2d9" />
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => navigation.navigate('Register')}
         className="text-slate-400 mt-0.5">
         <Ionicons name="log-in" size={26} color="#cbd2d9" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </SafeAreaView>
   );
 };

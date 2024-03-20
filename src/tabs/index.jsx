@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform} from 'react-native';
+import {Platform, View} from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -10,6 +10,9 @@ import Notifications from '../screens/notifications';
 import RFQ from '../screens/rfq';
 import Whislist from '../screens/whislist';
 import Account from '../screens/account';
+import Login from '../screens/login';
+
+import {useSelector} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,6 +32,9 @@ const screenOptions = {
 };
 
 export default function TabsLayout() {
+  const {logged_in} = useSelector(state => state.login);
+  console.log('🚀 ~ TabsLayout ~ login:', logged_in);
+
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
@@ -46,7 +52,7 @@ export default function TabsLayout() {
       />
       <Tab.Screen
         name="notifications"
-        component={Notifications}
+        component={logged_in ? Notifications : Login}
         options={{
           tabBarIcon: ({color, size}) => {
             return <FontAwesome name="bell-o" size={size} color={color} />;
@@ -55,7 +61,7 @@ export default function TabsLayout() {
       />
       <Tab.Screen
         name="rfq"
-        component={RFQ}
+        component={logged_in ? RFQ : Login}
         options={{
           tabBarIcon: ({color, size}) => {
             return <FontAwesome name="cube" size={size} color={color} />;
@@ -64,7 +70,7 @@ export default function TabsLayout() {
       />
       <Tab.Screen
         name="whislist"
-        component={Whislist}
+        component={logged_in ? Whislist : Login}
         options={{
           tabBarIcon: ({color, size}) => {
             return <FontAwesome name="heart-o" size={size} color={color} />;
@@ -73,7 +79,7 @@ export default function TabsLayout() {
       />
       <Tab.Screen
         name="Account"
-        component={Account}
+        component={logged_in ? Account : Login}
         options={{
           tabBarIcon: ({color, size}) => {
             return <FontAwesome name="user-o" size={size} color={color} />;
