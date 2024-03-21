@@ -4,6 +4,8 @@ import {Platform, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import HeaderHomeScreen from '../components/home/HeaderHomeScreen';
 import Home from '../screens/home';
 import Notifications from '../screens/notifications';
@@ -13,13 +15,15 @@ import Account from '../screens/account';
 import Login from '../screens/login';
 
 import {useSelector} from 'react-redux';
+import HeaderAccount from '../screens/account/_components/HeaderAccount';
+import {Button} from '@rneui/themed';
 
 const Tab = createBottomTabNavigator();
 
 const screenOptions = {
   tabBarShowLabel: false,
   tabBarActiveTintColor: '#fa541c',
-  headerShown: false,
+  headerShown: true,
   tabBarStyle: {
     position: 'absolute',
     bottom: 0,
@@ -33,8 +37,6 @@ const screenOptions = {
 
 export default function TabsLayout() {
   const {logged_in} = useSelector(state => state.login);
-  console.log('🚀 ~ TabsLayout ~ login:', logged_in);
-
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
@@ -80,11 +82,30 @@ export default function TabsLayout() {
       <Tab.Screen
         name="Account"
         component={logged_in ? Account : Login}
-        options={{
+        options={({navigation}) => ({
+          headerTitle: '',
           tabBarIcon: ({color, size}) => {
             return <FontAwesome name="user-o" size={size} color={color} />;
           },
-        }}
+          headerLeft: () => (
+            <View>
+              <Button
+                title="Buka Toko"
+                icon={() => (
+                  <Ionicons
+                    style={{marginRight: 10}}
+                    name="storefront-outline"
+                    size={20}
+                    color="white"
+                  />
+                )}
+                iconPosition="left"
+                color="#fa541c"
+              />
+            </View>
+          ),
+          headerRight: () => <HeaderAccount navigation={navigation} />,
+        })}
       />
     </Tab.Navigator>
   );

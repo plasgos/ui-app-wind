@@ -1,19 +1,27 @@
 import {View, Image, Platform, Text, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {Button, Card, Input} from '@rneui/themed';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
-import {getLogin} from '../../redux/modules/login/reducer';
+import {getLogin, resetMessageLogin} from '../../redux/modules/login/reducer';
 import Toast from 'react-native-toast-message';
 
 export default function Login({navigation}) {
   const [showPassword, setShowPassword] = useState(false);
 
   const login = useSelector(state => state.login);
-  console.log('🚀 ~ Login ~ login:', login);
-
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (login.message) {
+      Toast.show({
+        type: 'error',
+        text1: login.message,
+      });
+    }
+    dispatch(resetMessageLogin());
+  }, [dispatch, login.message]);
 
   const {
     control,
@@ -38,12 +46,7 @@ export default function Login({navigation}) {
           password,
         }),
       );
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: login.message,
-      });
-    }
+    } catch (error) {}
   };
 
   const defaultStyle = {};
@@ -148,7 +151,8 @@ export default function Login({navigation}) {
             </Text>
           </TouchableOpacity>
           <Button
-            disabled={!isValid}
+            loading={login.isLoadingLogin}
+            disabled={!isValid || login.isLoadingLogin}
             onPress={handleSubmit(onSubmit)}
             size="md"
             radius={'sm'}
@@ -179,6 +183,7 @@ export default function Login({navigation}) {
             title="Google"
             buttonStyle={{
               borderColor: '#CBD5E1',
+              borderWidth: 1,
             }}
             type="outline"
             titleStyle={{color: 'black', fontSize: 16}}

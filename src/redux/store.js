@@ -57,7 +57,7 @@ const persistConfig = {
   key: 'root',
   // storage: getStorage("register"),
   storage: AsyncStorage,
-  whitelist: ['register'],
+  whitelist: ['register', 'login'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducers);
 

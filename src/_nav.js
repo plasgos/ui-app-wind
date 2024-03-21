@@ -18,6 +18,7 @@ export const linking = {
         exact: true,
       },
       Login: '/login',
+      AccountSettings: '/account-settings',
       // Account: '/account',
       //  ... other screens
     },

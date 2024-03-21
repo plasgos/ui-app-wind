@@ -26,6 +26,8 @@ export default (state = initialState, action) => {
       return {...state, isLoadingLogout: action.payload};
     case types.SET_MESSAGE_LOGIN:
       return {...state, message: action.payload};
+    case types.RESET_MESSAGE_LOGIN:
+      return {...state, message: initialState.message};
     case types.RESET_LOGIN:
       return initialState;
     default:
@@ -47,6 +49,11 @@ export const setIsLoadingLogin = payload => ({
 });
 export const setMessageLogin = payload => ({
   type: types.SET_MESSAGE_LOGIN,
+  payload,
+});
+
+export const resetMessageLogin = payload => ({
+  type: types.RESET_MESSAGE_LOGIN,
   payload,
 });
 

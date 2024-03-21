@@ -17,6 +17,8 @@ import VerifyEmail from './src/screens/register/_components/VerifyEmail';
 import VerifyPhoneNumber from './src/screens/register/_components/VerifyPhoneNumber';
 import CompleteRegister from './src/screens/register/_components/CompleteRegister';
 import Login from './src/screens/login';
+import AccountSettings from './src/screens/account-settings';
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -25,6 +27,8 @@ import {NativeWindStyleSheet} from 'nativewind';
 import {Platform} from 'react-native';
 
 import Toast from 'react-native-toast-message';
+import HeaderAccount from './src/screens/account/_components/HeaderAccount';
+import ManageSecurity from './src/screens/account-settings/_components/ManageSecurity';
 
 const Stack = createNativeStackNavigator();
 const navigationRef = createNavigationContainerRef();
@@ -111,6 +115,22 @@ export default function App() {
               name="Login"
               component={Login}
               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="AccountSettings"
+              component={AccountSettings}
+              options={{
+                headerTitle: 'Akun Saya',
+                headerTitleAlign: 'center',
+              }}
+            />
+            <Stack.Screen
+              name="ManageSecurity"
+              component={ManageSecurity}
+              options={{
+                headerTitle: 'Login Dan Keamanan',
+                headerTitleAlign: 'center',
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>

@@ -22,6 +22,8 @@ import iconFontIonicons from 'react-native-vector-icons/Fonts/Ionicons.ttf';
 
 import iconFontMaterialIcons from 'react-native-vector-icons/Fonts/MaterialIcons.ttf';
 
+import iconFontOcticons from 'react-native-vector-icons/Fonts/Octicons.ttf';
+
 const iconFontStyles = `@font-face {
     src: url(${iconFont});
     font-family: FontAwesome;
@@ -45,6 +47,10 @@ const iconFontStyles = `@font-face {
   @font-face {
     src: url(${iconFontMaterialIcons});
     font-family: MaterialIcons;
+  }
+  @font-face {
+    src: url(${iconFontOcticons});
+    font-family: Octicons;
   }
   `;
 

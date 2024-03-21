@@ -9,7 +9,7 @@ import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 
 const HeaderHomeScreen = ({navigation}) => {
   return (
-    <SafeAreaView className="flex flex-row items-center gap-x-3 p-3 bg-white  ">
+    <SafeAreaView className="flex flex-row items-center gap-x-4 p-3 bg-white  ">
       <StatusBar translucent={false} />
       <View className="absolute left-6 text-slate-300">
         <Ionicons name="search-sharp" size={14} color="#86939E" />
