@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {View, Text, Platform} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {Input} from '@rneui/themed';

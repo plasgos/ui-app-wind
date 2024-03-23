@@ -20,6 +20,40 @@ function* watchGetInfoProfile(values) {
   }
 }
 
-const sagas = [takeLatest(types.GET_INFO_PROFILE, watchGetInfoProfile)];
+function* watchCheckPassword(values) {
+  const {payload} = values;
+
+  yield put(actions.isLoadingcheckPasswordSuccess(true));
+  try {
+    const response = yield call(Api.user.checkPassword, payload);
+    const {data} = response;
+    yield put(actions.checkPasswordSuccess(data));
+  } catch (e) {
+    console.log(e);
+  } finally {
+    yield put(actions.isLoadingcheckPasswordSuccess(false));
+  }
+}
+
+function* watchVerificationEmailMethod(values) {
+  const {payload} = values;
+
+  yield put(actions.isLoadingVerificationEmailMethod(true));
+  try {
+    const response = yield call(Api.user.reqOtpEmailMethod, payload);
+    const {data} = response;
+    yield put(actions.verificationEmailMethodSuccess(data));
+  } catch (e) {
+    console.log(e);
+  } finally {
+    yield put(actions.isLoadingVerificationEmailMethod(false));
+  }
+}
+
+const sagas = [
+  takeLatest(types.GET_INFO_PROFILE, watchGetInfoProfile),
+  takeLatest(types.CHECK_PASSWORD, watchCheckPassword),
+  takeLatest(types.VERIFICATION_EMAIL_METHOD, watchVerificationEmailMethod),
+];
 
 export default sagas;
