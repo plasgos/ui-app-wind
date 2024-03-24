@@ -19,6 +19,7 @@ export const linking = {
       },
       Login: '/login',
       AccountSettings: '/account-settings',
+      InputNewEmail: '/input-new-email',
       // Account: '/account',
       //  ... other screens
     },

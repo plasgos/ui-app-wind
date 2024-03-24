@@ -50,10 +50,29 @@ function* watchVerificationEmailMethod(values) {
   }
 }
 
+function* watchVerifyOtpCheckEmail(values) {
+  const {payload} = values;
+
+  yield put(actions.isLoadingVerifyOtpCheckEmail(true));
+  try {
+    const response = yield call(Api.user.verifyOtpCheckEmail, payload);
+    const {data} = response;
+    yield put(actions.verifyOtpCheckEMailSuccess(data));
+  } catch (e) {
+    if (e.response) {
+      const response = e.response.data.message;
+      yield put(actions.setMessageErrorVerifyOtpCheckEmail(response));
+    }
+  } finally {
+    yield put(actions.isLoadingVerifyOtpCheckEmail(false));
+  }
+}
+
 const sagas = [
   takeLatest(types.GET_INFO_PROFILE, watchGetInfoProfile),
   takeLatest(types.CHECK_PASSWORD, watchCheckPassword),
   takeLatest(types.VERIFICATION_EMAIL_METHOD, watchVerificationEmailMethod),
+  takeLatest(types.VERIFY_OTP_CHECK_EMAIL, watchVerifyOtpCheckEmail),
 ];
 
 export default sagas;

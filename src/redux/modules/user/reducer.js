@@ -19,6 +19,16 @@ const initialState = {
       loading: false,
     },
   },
+  verifyOtpCheckEmail: {
+    data: {},
+    message: '',
+    loading: false,
+  },
+};
+
+const resetData = {
+  data: {},
+  loading: false,
 };
 
 export default (state = initialState, action) => {
@@ -103,6 +113,40 @@ export default (state = initialState, action) => {
           },
         },
       };
+    case types.VERIFY_OTP_CHECK_EMAIL_SUCCESS:
+      return {
+        ...state,
+        verifyOtpCheckEmail: {
+          ...state.verifyOtpCheckEmail,
+          data: action.payload,
+        },
+      };
+    case types.IS_LOADING_VERIFY_OTP_CHECK_EMAIL:
+      return {
+        ...state,
+        verifyOtpCheckEmail: {
+          ...state.verifyOtpCheckEmail,
+          loading: action.payload,
+        },
+      };
+    case types.SET_MESSAGE_ERROR_VERIFY_OTP_CHECK_EMAIL:
+      return {
+        ...state,
+        verifyOtpCheckEmail: {
+          ...state.verifyOtpCheckEmail,
+          message: action.payload,
+        },
+      };
+    case types.RESET_USER:
+      return {
+        ...state,
+        checkPassword: resetData,
+        verificationMethod: {
+          email: resetData,
+          phoneNumber: resetData,
+        },
+        verifyOtpCheckEmail: resetData,
+      };
     default:
       return state;
   }
@@ -162,5 +206,25 @@ export const verificationPhoneNumberMethodSuccess = payload => ({
 });
 export const isLoadingVerificationPhoneNumberMethod = payload => ({
   type: types.IS_LOADING_VERIFICATION_PHONE_NUMBER_METHOD,
+  payload,
+});
+export const verifyOtpCheckEMail = payload => ({
+  type: types.VERIFY_OTP_CHECK_EMAIL,
+  payload,
+});
+export const verifyOtpCheckEMailSuccess = payload => ({
+  type: types.VERIFY_OTP_CHECK_EMAIL_SUCCESS,
+  payload,
+});
+export const isLoadingVerifyOtpCheckEmail = payload => ({
+  type: types.IS_LOADING_VERIFY_OTP_CHECK_EMAIL,
+  payload,
+});
+export const setMessageErrorVerifyOtpCheckEmail = payload => ({
+  type: types.SET_MESSAGE_ERROR_VERIFY_OTP_CHECK_EMAIL,
+  payload,
+});
+export const resetUser = payload => ({
+  type: types.RESET_USER,
   payload,
 });

@@ -12,8 +12,6 @@ import InputOtpEmail from './InputOtpEmail';
 export default function MethodVerification({user}) {
   const {token} = useSelector(state => state.login);
   const {verificationMethod} = useSelector(state => state.user);
-  console.log('🚀 ~ MethodVerification ~ userData:', verificationMethod);
-
   const dispatch = useDispatch();
 
   const handleVerifyEmailMethod = async () => {

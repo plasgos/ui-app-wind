@@ -29,6 +29,7 @@ import {Platform} from 'react-native';
 import Toast from 'react-native-toast-message';
 import HeaderAccount from './src/screens/account/_components/HeaderAccount';
 import ManageSecurity from './src/screens/account-settings/_components/ManageSecurity';
+import InputNewEmail from './src/screens/account-settings/_components/modal/InputNewEmail';
 
 const Stack = createNativeStackNavigator();
 const navigationRef = createNavigationContainerRef();
@@ -131,6 +132,14 @@ export default function App() {
                 headerTitle: 'Login Dan Keamanan',
                 headerTitleAlign: 'center',
               }}
+            />
+            <Stack.Screen
+              name="InputNewEmail"
+              component={InputNewEmail}
+              // options={{
+              //   headerTitle: 'Login Dan Keamanan',
+              //   headerTitleAlign: 'center',
+              // }}
             />
           </Stack.Navigator>
         </NavigationContainer>

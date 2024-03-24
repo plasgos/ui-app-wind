@@ -31,4 +31,10 @@ export default {
         token: payload.token,
       },
     }),
+  changeNewEmail: payload =>
+    Api.post('v2/user/update-email/otp/request/changecheck', payload.data, {
+      headers: {
+        token: payload.token,
+      },
+    }),
 };

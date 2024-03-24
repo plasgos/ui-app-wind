@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   getInfoProfile,
   resetCheckPassword,
+  resetUser,
 } from '../../../redux/modules/user/reducer';
 
 import {Skeleton} from '@rneui/themed';
@@ -29,7 +30,8 @@ export default function ManageSecurity() {
 
   const toggleModalEmail = () => {
     setOpenModalEmail(prev => !prev);
-    dispatch(resetCheckPassword());
+    // dispatch(resetCheckPassword());
+    dispatch(resetUser());
   };
 
   return (
@@ -39,7 +41,7 @@ export default function ManageSecurity() {
         className="flex flex-row items-center py-3 border-b-[0.5px] border-slate-400">
         <View className="flex-grow">
           <Text className="font-bold mb-1 ">Email :</Text>
-          {!user.data.data ? (
+          {!user.data?.data ? (
             <Skeleton
               skeletonStyle={{backgroundColor: '#CBD5E1'}}
               animation="wave"
@@ -50,7 +52,7 @@ export default function ManageSecurity() {
             <View className="flex flex-row ">
               <Text className="mr-2">{user.data?.data?.email}</Text>
 
-              {user.data.data.email_verified ? (
+              {user.data?.data?.email_verified ? (
                 <Octicons color={'green'} name="verified" size={18} />
               ) : (
                 <Octicons color={'#CBD5E1'} name="unverified" size={18} />
@@ -67,7 +69,7 @@ export default function ManageSecurity() {
       <TouchableOpacity className="flex flex-row items-center py-3 border-b-[0.5px]  border-slate-400">
         <View className="flex-grow">
           <Text className="font-bold mb-1 ">Nomor Ponsel :</Text>
-          {!user.data.data ? (
+          {!user.data?.data ? (
             <Skeleton
               skeletonStyle={{backgroundColor: '#CBD5E1'}}
               animation="wave"
