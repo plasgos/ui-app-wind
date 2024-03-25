@@ -11,7 +11,7 @@ import {checkPassword} from '../../../../redux/modules/user/reducer';
 
 import MethodVerification from './MethodVerification';
 
-export default function EditEmailModal({
+export default function EditPhoneNumberModal({
   openModal,
   toggleModal,
   user,
@@ -61,7 +61,10 @@ export default function EditEmailModal({
     <View>
       <Dialog isVisible={openModal} onBackdropPress={toggleModal}>
         <View className="flex flex-row justify-between items-center mb-3">
-          <Dialog.Title titleStyle={{marginBottom: 0}} title={'Ubah Email'} />
+          <Dialog.Title
+            titleStyle={{marginBottom: 0}}
+            title={'Ubah Nomor Ponsel'}
+          />
           <TouchableOpacity onPress={toggleModal}>
             <AntDesign name="close" size={24} />
           </TouchableOpacity>
@@ -70,8 +73,12 @@ export default function EditEmailModal({
         {!check.data?.success ? (
           <>
             <View className="my-3">
-              <Text className="font-bold px-[10px] ">Email saat ini :</Text>
-              <Text className="mb-3 px-[10px]">{user?.data?.data?.email}</Text>
+              <Text className="font-bold px-[10px] ">
+                Nomor Ponsel saat ini :
+              </Text>
+              <Text className="mb-3 px-[10px]">
+                {user?.data?.data?.phone_number}
+              </Text>
 
               <View className="">
                 <Controller

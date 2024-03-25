@@ -20,5 +20,9 @@ export default {
   IS_LOADING_VERIFY_OTP_CHECK_EMAIL: 'is-loading-verify-otp-check-email',
   SET_MESSAGE_ERROR_VERIFY_OTP_CHECK_EMAIL:
     'set-message-error-verify-otp-check-email',
+  CHANGE_NEW_EMAIL: 'change-new-email',
+  CHANGE_NEW_EMAIL_SUCCESS: 'change-new-email-success',
+  IS_LOADING_CHANGE_NEW_EMAIL: 'is-loading-change-new-email',
+
   RESET_USER: 'reset-user',
 };

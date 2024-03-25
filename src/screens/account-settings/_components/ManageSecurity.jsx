@@ -10,9 +10,11 @@ import {
 
 import {Skeleton} from '@rneui/themed';
 import EditEmailModal from './modal/EditEmailModal';
+import EditPhoneNumberModal from './modal/EditPhoneNumberModal';
 
 export default function ManageSecurity() {
   const [openModalEmail, setOpenModalEmail] = useState(false);
+  const [openModalPhoneNumber, setOpenModalPhoneNumber] = useState(false);
 
   const {user} = useSelector(state => state.user);
   const {token} = useSelector(state => state.login);
@@ -30,7 +32,11 @@ export default function ManageSecurity() {
 
   const toggleModalEmail = () => {
     setOpenModalEmail(prev => !prev);
-    // dispatch(resetCheckPassword());
+    dispatch(resetUser());
+  };
+
+  const toggleModalPhoneNumber = () => {
+    setOpenModalPhoneNumber(prev => !prev);
     dispatch(resetUser());
   };
 
@@ -66,7 +72,9 @@ export default function ManageSecurity() {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity className="flex flex-row items-center py-3 border-b-[0.5px]  border-slate-400">
+      <TouchableOpacity
+        onPress={() => setOpenModalPhoneNumber(true)}
+        className="flex flex-row items-center py-3 border-b-[0.5px]  border-slate-400">
         <View className="flex-grow">
           <Text className="font-bold mb-1 ">Nomor Ponsel :</Text>
           {!user.data?.data ? (
@@ -114,6 +122,15 @@ export default function ManageSecurity() {
         user={user}
         openModal={openModalEmail}
         toggleModal={toggleModalEmail}
+        type="changeEmail"
+      />
+
+      <EditPhoneNumberModal
+        token={token}
+        user={user}
+        openModal={openModalPhoneNumber}
+        toggleModal={toggleModalPhoneNumber}
+        type="changePhoneNumber"
       />
     </View>
   );

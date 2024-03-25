@@ -19,7 +19,7 @@ export default {
         token: payload.token,
       },
     }),
-  reqOtpPhoneNumberMethod: payload =>
+  reqOtpEmailByPhoneNumber: payload =>
     Api.get('/v2/user/update-email/otp/request/phone-number', {
       headers: {
         token: payload.token,

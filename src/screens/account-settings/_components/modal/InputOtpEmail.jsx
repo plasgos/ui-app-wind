@@ -1,19 +1,19 @@
 import {View, Text, Platform} from 'react-native';
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import {Input} from '@rneui/themed';
 import {Button} from '@rneui/themed';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {useForm, Controller} from 'react-hook-form';
-import Toast from 'react-native-toast-message';
 import {TouchableOpacity} from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {maskingEmail} from '../../../../lib/maskingEmail';
 import {verifyOtpCheckEMail} from '../../../../redux/modules/user/reducer';
 import InputNewEmail from './InputNewEmail';
+import {maskPhoneNumber} from '../../../../lib/maskingPhoneNumber';
 
-export default function InputOtpEmail({navigation}) {
+export default function InputOtpEmail({typeVerify}) {
   const {
     control,
     handleSubmit,
@@ -32,14 +32,18 @@ export default function InputOtpEmail({navigation}) {
   const dispatch = useDispatch();
 
   const handleRegister = async ({otp}) => {
-    await dispatch(
-      verifyOtpCheckEMail({
-        data: {
-          otp_code: otp,
-        },
-        token,
-      }),
-    );
+    if (typeVerify === 'verifyEmail') {
+      await dispatch(
+        verifyOtpCheckEMail({
+          data: {
+            otp_code: otp,
+          },
+          token,
+        }),
+      );
+    } else {
+      console.log('verify otp change phone number');
+    }
   };
 
   const handleVerify = async () => {
@@ -82,10 +86,13 @@ export default function InputOtpEmail({navigation}) {
             color="black"
           />
           <Text className="text-sm text-center text-slate-400 mb-3">
-            Kode Verifikasi Sudah Di Kirim Melalui Email Ke :
+            Kode Verifikasi Sudah Di Kirim Melalui{' '}
+            {typeVerify === 'verifyEmail' ? 'email' : 'pesan'} Ke :
             <Text className="font-semibold text-black">
               {' '}
-              {maskingEmail(user?.data?.data.email)}
+              {typeVerify === 'verifyEmail'
+                ? maskingEmail(user?.data?.data.email)
+                : maskPhoneNumber(user?.data?.data.phone_number)}
             </Text>
           </Text>
 
@@ -116,7 +123,7 @@ export default function InputOtpEmail({navigation}) {
           </View>
           <Button
             loading={verifyOtpCheckEmail.loading}
-            disabled={!isValid}
+            disabled={!isValid || verifyOtpCheckEmail.loading}
             onPress={handleSubmit(handleRegister)}
             title="Verifikasi"
             buttonStyle={{

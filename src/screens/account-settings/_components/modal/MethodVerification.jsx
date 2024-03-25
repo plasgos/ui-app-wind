@@ -9,19 +9,32 @@ import {maskingEmail} from '../../../../lib/maskingEmail';
 import {maskPhoneNumber} from '../../../../lib/maskingPhoneNumber';
 import InputOtpEmail from './InputOtpEmail';
 
-export default function MethodVerification({user}) {
+export default function MethodVerification({user, type}) {
   const {token} = useSelector(state => state.login);
   const {verificationMethod} = useSelector(state => state.user);
+  console.log(
+    '🚀 ~ MethodVerification ~ verificationMethod:',
+    verificationMethod,
+  );
   const dispatch = useDispatch();
 
   const handleVerifyEmailMethod = async () => {
-    await dispatch(verificationEmailMethod({token}));
+    if (type === 'changeEmail') {
+      await dispatch(verificationEmailMethod({token}));
+    }
   };
 
   return (
     <View>
-      {verificationMethod.email.data.success ? (
-        <InputOtpEmail />
+      {verificationMethod.email.data.success ||
+      verificationMethod.phoneNumber.data.success ? (
+        <InputOtpEmail
+          typeVerify={
+            verificationMethod.email.data.success
+              ? 'verifyEmail'
+              : 'verifyPhoneNumber'
+          }
+        />
       ) : (
         <View>
           <Text className="font-bold text-center mb-2">
@@ -30,7 +43,8 @@ export default function MethodVerification({user}) {
 
           <Text className="text-center mb-2">
             Pilih metode verifikasi di bawah ini untuk mendapatkan kode
-            verifikasi dan melanjutkan proses ubah email
+            verifikasi dan melanjutkan proses ubah{' '}
+            {type === 'changePhoneNumber' ? 'nomor ponsel' : 'email'}
           </Text>
           {!verificationMethod.email.loading &&
           !verificationMethod.phoneNumber.loading ? (
