@@ -20,6 +20,7 @@ export const linking = {
       Login: '/login',
       AccountSettings: '/account-settings',
       InputNewEmail: '/input-new-email',
+      // ManageSecurity: '/account-settings/manage-security',
       // Account: '/account',
       //  ... other screens
     },

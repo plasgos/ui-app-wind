@@ -1,33 +1,61 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {verificationEmailMethod} from '../../../../redux/modules/user/reducer';
+import {
+  verificationEmailMethod,
+  verificationPhoneNumberMethod,
+} from '../../../../redux/modules/change-email/reducer';
 import {maskingEmail} from '../../../../lib/maskingEmail';
 import {maskPhoneNumber} from '../../../../lib/maskingPhoneNumber';
 import InputOtpEmail from './InputOtpEmail';
+import axios from 'axios';
+import {Api} from '../../../../services/api';
 
 export default function MethodVerification({user, type}) {
   const {token} = useSelector(state => state.login);
   const {verificationMethod} = useSelector(state => state.user);
-  console.log(
-    '🚀 ~ MethodVerification ~ verificationMethod:',
-    verificationMethod,
-  );
   const dispatch = useDispatch();
 
+  const [methodVerifyData, setMethodVerifyData] = useState({});
+  console.log('🚀 ~ MethodVerification ~ methodVerifyData:', methodVerifyData);
+  const changeEmail = useSelector(state => state.changeEmail);
   const handleVerifyEmailMethod = async () => {
-    if (type === 'changeEmail') {
-      await dispatch(verificationEmailMethod({token}));
-    }
+    // if (type === 'changeEmail') {
+    //   await dispatch(verificationEmailMethod({token}));
+    // }
+
+    const response = await axios.get(
+      'https://test-plasgos.herokuapp.com/v2/user/update-email/otp/request/email',
+      {
+        headers: {
+          token,
+        },
+      },
+    );
+
+    setMethodVerifyData(response.data);
+  };
+
+  const handleVerifyEmailMethodByPhoneNumber = async () => {
+    await dispatch(verificationPhoneNumberMethod({token}));
   };
 
   return (
     <View>
-      {verificationMethod.email.data.success ||
+      {/* {verificationMethod.email.data.success ||
       verificationMethod.phoneNumber.data.success ? (
+        <InputOtpEmail
+          typeVerify={
+            verificationMethod.email.data.success
+              ? 'verifyEmail'
+              : 'verifyPhoneNumber'
+          }
+        /> */}
+
+      {verificationMethod.success ? (
         <InputOtpEmail
           typeVerify={
             verificationMethod.email.data.success
@@ -71,7 +99,9 @@ export default function MethodVerification({user, type}) {
               )}
 
               {user.data.data.phone_number && (
-                <TouchableOpacity className="border border-slate-300 rounded-lg p-3 mb-3">
+                <TouchableOpacity
+                  onPress={handleVerifyEmailMethodByPhoneNumber}
+                  className="border border-slate-300 rounded-lg p-3 mb-3">
                   <View className="flex flex-row items-center">
                     <Ionicons
                       style={{marginRight: 10}}

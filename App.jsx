@@ -30,6 +30,9 @@ import Toast from 'react-native-toast-message';
 import HeaderAccount from './src/screens/account/_components/HeaderAccount';
 import ManageSecurity from './src/screens/account-settings/_components/ManageSecurity';
 import InputNewEmail from './src/screens/account-settings/_components/modal/InputNewEmail';
+import MethodVerifyChangeEmail from './src/screens/account-settings/method-verify-change-email';
+import MethodVerifyChangePhoneNumber from './src/screens/account-settings/method-verify-change-phone-number';
+import HeaderMethodVerify from './src/screens/account-settings/_components/HeaderMethodVerify';
 
 const Stack = createNativeStackNavigator();
 const navigationRef = createNavigationContainerRef();
@@ -128,14 +131,46 @@ export default function App() {
             <Stack.Screen
               name="ManageSecurity"
               component={ManageSecurity}
-              options={{
+              options={({navigation}) => ({
                 headerTitle: 'Login Dan Keamanan',
                 headerTitleAlign: 'center',
-              }}
+                headerLeft: () => (
+                  <AntDesign
+                    style={
+                      Platform.OS === 'web'
+                        ? {marginHorizontal: 10}
+                        : {marginRight: 15}
+                    }
+                    onPress={() => navigation.navigate('AccountSettings')}
+                    name="arrowleft"
+                    size={24}
+                    color="black"
+                  />
+                ),
+              })}
+            />
+            <Stack.Screen
+              name="MethodVerifyChangeEmail"
+              component={MethodVerifyChangeEmail}
+              options={({navigation}) => ({
+                headerTitle: 'Metode Verifikasi',
+                headerTitleAlign: 'center',
+                header: () => <HeaderMethodVerify navigation={navigation} />,
+              })}
+            />
+            <Stack.Screen
+              name="MethodVerifyChangePhoneNumber"
+              component={MethodVerifyChangePhoneNumber}
+              options={({navigation}) => ({
+                headerTitle: 'Metode Verifikasi',
+                headerTitleAlign: 'center',
+                header: () => <HeaderMethodVerify navigation={navigation} />,
+              })}
             />
             <Stack.Screen
               name="InputNewEmail"
               component={InputNewEmail}
+
               // options={{
               //   headerTitle: 'Login Dan Keamanan',
               //   headerTitleAlign: 'center',

@@ -1,18 +1,14 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  getInfoProfile,
-  resetCheckPassword,
-  resetUser,
-} from '../../../redux/modules/user/reducer';
+import {getInfoProfile} from '../../../redux/modules/user/reducer';
 
 import {Skeleton} from '@rneui/themed';
 import EditEmailModal from './modal/EditEmailModal';
 import EditPhoneNumberModal from './modal/EditPhoneNumberModal';
 
-export default function ManageSecurity() {
+export default function ManageSecurity({navigation}) {
   const [openModalEmail, setOpenModalEmail] = useState(false);
   const [openModalPhoneNumber, setOpenModalPhoneNumber] = useState(false);
 
@@ -30,15 +26,13 @@ export default function ManageSecurity() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const toggleModalEmail = () => {
-    setOpenModalEmail(prev => !prev);
-    dispatch(resetUser());
-  };
+  const toggleModalEmail = useCallback(() => {
+    setOpenModalEmail(false);
+  }, [setOpenModalEmail]);
 
-  const toggleModalPhoneNumber = () => {
-    setOpenModalPhoneNumber(prev => !prev);
-    dispatch(resetUser());
-  };
+  const toggleModalPhoneNumber = useCallback(() => {
+    setOpenModalPhoneNumber(false);
+  }, [setOpenModalPhoneNumber]);
 
   return (
     <View className="flex-1 bg-white p-5">
@@ -117,21 +111,25 @@ export default function ManageSecurity() {
         </View>
       </TouchableOpacity>
 
-      <EditEmailModal
-        token={token}
-        user={user}
-        openModal={openModalEmail}
-        toggleModal={toggleModalEmail}
-        type="changeEmail"
-      />
-
-      <EditPhoneNumberModal
-        token={token}
-        user={user}
-        openModal={openModalPhoneNumber}
-        toggleModal={toggleModalPhoneNumber}
-        type="changePhoneNumber"
-      />
+      {openModalEmail ? (
+        <EditEmailModal
+          token={token}
+          user={user}
+          openModal={openModalEmail}
+          toggleModal={toggleModalEmail}
+          navigation={navigation}
+          type="changeEmail"
+        />
+      ) : (
+        <EditPhoneNumberModal
+          token={token}
+          user={user}
+          openModal={openModalPhoneNumber}
+          toggleModal={toggleModalPhoneNumber}
+          navigation={navigation}
+          type="changePhoneNumber"
+        />
+      )}
     </View>
   );
 }
