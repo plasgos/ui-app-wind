@@ -7,7 +7,8 @@ import {Controller, useForm} from 'react-hook-form';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
-import {checkPassword} from '../../../../redux/modules/user/reducer';
+
+import {checkPasswordChangePhoneNumber} from '../../../../redux/modules/change-phone-number/reducer';
 
 export default function EditPhoneNumberModal({
   openModal,
@@ -19,14 +20,13 @@ export default function EditPhoneNumberModal({
 }) {
   const [showPassword, setShowPassword] = useState(false);
 
-  const {checkPassword: check} = useSelector(state => state.user);
+  const changePhoneNumber = useSelector(state => state.changePhoneNumber);
 
   const dispatch = useDispatch();
 
   const {
     control,
     handleSubmit,
-
     formState: {isValid},
   } = useForm({
     defaultValues: {
@@ -35,16 +35,16 @@ export default function EditPhoneNumberModal({
   });
 
   useEffect(() => {
-    if (check.data.success && type === 'changePhoneNumber') {
+    if (changePhoneNumber.checkPassword.data.success) {
       navigation.navigate('MethodVerifyChangePhoneNumber');
       toggleModal();
     }
-  }, [check, navigation, toggleModal, type]);
+  }, [changePhoneNumber.checkPassword.data.success, navigation, toggleModal]);
 
   const onSubmit = async ({password}) => {
     try {
       await dispatch(
-        checkPassword({
+        checkPasswordChangePhoneNumber({
           data: {
             account: user.data.data.email,
             password,
@@ -93,11 +93,10 @@ export default function EditPhoneNumberModal({
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <Input
-                  // errorMessage={errors.password && 'Password harus di isi'}
                   errorMessage={
-                    check.data?.success === false &&
-                    check.data?.message &&
-                    check.data?.message
+                    changePhoneNumber.checkPassword.data?.success === false &&
+                    changePhoneNumber.checkPassword.data?.message &&
+                    changePhoneNumber.checkPassword.data?.message
                   }
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -133,8 +132,8 @@ export default function EditPhoneNumberModal({
 
         <Dialog.Actions>
           <Dialog.Button
-            loading={check.loading}
-            disabled={!isValid || check.loading}
+            loading={changePhoneNumber.checkPassword.loading}
+            disabled={!isValid || changePhoneNumber.checkPassword.loading}
             title="Lanjutkan"
             type="solid"
             radius={'md'}

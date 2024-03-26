@@ -1,5 +1,5 @@
 import {View, Text, Platform} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Input} from '@rneui/themed';
 import {Button} from '@rneui/themed';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,11 +9,41 @@ import {TouchableOpacity} from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {maskingEmail} from '../../../../lib/maskingEmail';
-import {verifyOtpCheckEMail} from '../../../../redux/modules/user/reducer';
+
 import InputNewEmail from './InputNewEmail';
 import {maskPhoneNumber} from '../../../../lib/maskingPhoneNumber';
+import {
+  verificationEmailMethod,
+  verificationPhoneNumberMethod,
+  verifyOtpCheckEMail,
+} from '../../../../redux/modules/change-email/reducer';
 
 export default function InputOtpEmail({typeVerify}) {
+  // const {typeVerify} = route.params;
+
+  const [remainingSeconds, setRemainingSeconds] = useState(30);
+  const [countdownActive, setCountdownActive] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (countdownActive) {
+      timer = setInterval(() => {
+        if (remainingSeconds <= 0) {
+          clearInterval(timer);
+          setCountdownActive(false); // Menandakan countdown telah selesai
+        } else {
+          setRemainingSeconds(prevSeconds => prevSeconds - 1);
+        }
+      }, 1000);
+    }
+
+    return () => clearInterval(timer);
+  }, [countdownActive, remainingSeconds]);
+
+  useEffect(() => {
+    setCountdownActive(true);
+  }, []);
+
   const {
     control,
     handleSubmit,
@@ -25,39 +55,34 @@ export default function InputOtpEmail({typeVerify}) {
   });
 
   const {user} = useSelector(state => state.user);
-  const {verifyOtpCheckEmail} = useSelector(state => state.user);
+  const {verifyOtpCheckEmail: checkEmail} = useSelector(
+    state => state.changeEmail,
+  );
 
   const {token} = useSelector(state => state.login);
 
   const dispatch = useDispatch();
 
-  const handleRegister = async ({otp}) => {
-    if (typeVerify === 'verifyEmail') {
-      await dispatch(
-        verifyOtpCheckEMail({
-          data: {
-            otp_code: otp,
-          },
-          token,
-        }),
-      );
-    } else {
-      console.log('verify otp change phone number');
-    }
+  const handleVerifyOtp = async ({otp}) => {
+    await dispatch(
+      verifyOtpCheckEMail({
+        data: {
+          otp_code: otp,
+        },
+        token,
+      }),
+    );
   };
 
-  const handleVerify = async () => {
-    // try {
-    //   await dispatch(resetOtp());
-    //   await dispatch(resetVerifyOtp());
-    //   await dispatch(requestOtpEmail({email: check?.data?.data.email}));
-    //   reset();
-    //   if (inputs[0].current) {
-    //     inputs[0].current.focus();
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  const resendOtp = async () => {
+    setRemainingSeconds(30);
+    setCountdownActive(true);
+
+    if (typeVerify === 'verifyOtpByEmail') {
+      await dispatch(verificationEmailMethod({token}));
+    } else {
+      await dispatch(verificationPhoneNumberMethod({token}));
+    }
   };
 
   const defaultStyle = {};
@@ -69,8 +94,8 @@ export default function InputOtpEmail({typeVerify}) {
   }
 
   return (
-    <View>
-      {verifyOtpCheckEmail.data.success ? (
+    <View className="">
+      {checkEmail.data.success ? (
         <InputNewEmail user={user} />
       ) : (
         <View
@@ -79,18 +104,29 @@ export default function InputOtpEmail({typeVerify}) {
           <Text className="text-xl text-center mb-3">
             Masukan Kode Verifikasi
           </Text>
-          <Ionicons
-            style={{marginBottom: 10}}
-            name="mail"
-            size={36}
-            color="black"
-          />
+
+          {typeVerify === 'verifyOtpByEmail' ? (
+            <Ionicons
+              style={{marginBottom: 10}}
+              name="mail-outline"
+              size={36}
+              color="black"
+            />
+          ) : (
+            <Ionicons
+              style={{marginBottom: 10}}
+              name="chatbox-ellipses-outline"
+              size={36}
+              color="black"
+            />
+          )}
+
           <Text className="text-sm text-center text-slate-400 mb-3">
             Kode Verifikasi Sudah Di Kirim Melalui{' '}
-            {typeVerify === 'verifyEmail' ? 'email' : 'pesan'} Ke :
+            {typeVerify === 'verifyOtpByEmail' ? 'email' : 'pesan'} Ke :
             <Text className="font-semibold text-black">
               {' '}
-              {typeVerify === 'verifyEmail'
+              {typeVerify === 'verifyOtpByEmail'
                 ? maskingEmail(user?.data?.data.email)
                 : maskPhoneNumber(user?.data?.data.phone_number)}
             </Text>
@@ -105,13 +141,14 @@ export default function InputOtpEmail({typeVerify}) {
               rules={{required: true, minLength: 6, maxLength: 6}}
               render={({field: {onChange, onBlur, value}}) => (
                 <Input
-                  errorMessage={
-                    verifyOtpCheckEmail.message && verifyOtpCheckEmail.message
-                  }
+                  errorMessage={checkEmail.message && checkEmail.message}
                   style={defaultStyle}
                   maxLength={6}
                   inputStyle={{
                     textAlign: Platform.OS === 'android' && 'center',
+                  }}
+                  inputContainerStyle={{
+                    borderColor: '#fa541c',
                   }}
                   keyboardType="number-pad"
                   onBlur={onBlur}
@@ -122,9 +159,9 @@ export default function InputOtpEmail({typeVerify}) {
             />
           </View>
           <Button
-            loading={verifyOtpCheckEmail.loading}
-            disabled={!isValid || verifyOtpCheckEmail.loading}
-            onPress={handleSubmit(handleRegister)}
+            loading={checkEmail.loading}
+            disabled={!isValid || checkEmail.loading}
+            onPress={handleSubmit(handleVerifyOtp)}
             title="Verifikasi"
             buttonStyle={{
               backgroundColor: '#fa541c',
@@ -137,13 +174,27 @@ export default function InputOtpEmail({typeVerify}) {
             }}
           />
 
-          <View className="mt-3 flex-row ">
-            <Text className="text-slate-400 ">
-              Tidak Menerima Kode Verifikasi ?{' '}
-            </Text>
-            <TouchableOpacity onPress={handleVerify}>
-              <Text className="underline text-[#fa541c]">Kirim Ulang</Text>
-            </TouchableOpacity>
+          <View className="mt-3  ">
+            {remainingSeconds <= 0 ? (
+              <View className="flex-row">
+                <Text className="text-slate-400 ">
+                  Tidak Menerima Kode Verifikasi ?{' '}
+                </Text>
+                <TouchableOpacity onPress={resendOtp}>
+                  <Text className="underline text-[#fa541c]">Kirim Ulang</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View>
+                <Text className="text-slate-400 ">
+                  Mohon tunggu
+                  <Text className="text-slate-600 font-semibold mx-1">
+                    {remainingSeconds} detik
+                  </Text>
+                  untuk mengirim ulang
+                </Text>
+              </View>
+            )}
           </View>
         </View>
       )}

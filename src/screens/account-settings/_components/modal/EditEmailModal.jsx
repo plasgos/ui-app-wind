@@ -7,7 +7,7 @@ import {Controller, useForm} from 'react-hook-form';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
-import {checkPassword} from '../../../../redux/modules/user/reducer';
+
 import {checkPasswordChangeEmail} from '../../../../redux/modules/change-email/reducer';
 
 export default function EditEmailModal({
@@ -20,8 +20,6 @@ export default function EditEmailModal({
 }) {
   const [showPassword, setShowPassword] = useState(false);
 
-  const {checkPassword: check} = useSelector(state => state.user);
-
   const changeEmail = useSelector(state => state.changeEmail);
   console.log('🚀 ~ changeEmail:', changeEmail);
 
@@ -30,7 +28,6 @@ export default function EditEmailModal({
   const {
     control,
     handleSubmit,
-
     formState: {isValid},
   } = useForm({
     defaultValues: {
@@ -92,11 +89,10 @@ export default function EditEmailModal({
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <Input
-                  // errorMessage={errors.password && 'Password harus di isi'}
                   errorMessage={
-                    check.data?.success === false &&
-                    check.data?.message &&
-                    check.data?.message
+                    changeEmail.checkPassword.data?.success === false &&
+                    changeEmail.checkPassword.data?.message &&
+                    changeEmail.checkPassword.data?.message
                   }
                   onBlur={onBlur}
                   onChangeText={onChange}

@@ -6,8 +6,12 @@ import Octicons from 'react-native-vector-icons/Octicons';
 
 export default function AccountSettings({navigation}) {
   const login = useSelector(state => state.login);
-  const user = useSelector(state => state.user);
-  console.log('🚀 ~ AccountSettings ~ user:', user);
+  // const changePhoneNumber = useSelector(state => state.changePhoneNumber);
+  // console.log('🚀 ~ AccountSettings ~ changePhoneNumber:', changePhoneNumber);
+
+  const changeEmail = useSelector(state => state.changeEmail);
+  console.log('🚀 ~ AccountSettings ~ changeEmail:', changeEmail);
+
   return (
     <ScrollView
       contentContainerStyle={{

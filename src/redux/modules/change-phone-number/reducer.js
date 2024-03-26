@@ -20,10 +20,6 @@ const initialState = {
     message: '',
     loading: false,
   },
-  newEmail: {
-    data: {},
-    loading: false,
-  },
 };
 
 const resetData = {
@@ -33,7 +29,7 @@ const resetData = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case types.CHECK_PASSWORD_SUCCESS_CHANGE_EMAIL:
+    case types.CHECK_PASSWORD_SUCCESS_CHANGE_PHONE_NUMBER:
       return {
         ...state,
         checkPassword: {
@@ -41,7 +37,7 @@ export default (state = initialState, action) => {
           data: action.payload,
         },
       };
-    case types.IS_LOADING_CHECK_PASSWORD_CHANGE_EMAIL:
+    case types.IS_LOADING_CHECK_PASSWORD_CHANGE_PHONE_NUMBER:
       return {
         ...state,
         checkPassword: {
@@ -49,7 +45,7 @@ export default (state = initialState, action) => {
           loading: action.payload,
         },
       };
-    case types.RESET_CHECK_PASSWORD_CHANGE_EMAIL:
+    case types.RESET_CHECK_PASSWORD_CHANGE_PHONE_NUMBER:
       return {...state, checkPassword: initialState.checkPassword};
     case types.VERIFICATION_EMAIL_METHOD_SUCCESS:
       return {
@@ -77,7 +73,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         verificationMethod: {
-          ...state.verificationMethod,
+          ...state.phoneNumber,
           phoneNumber: {
             ...state.verificationMethod.phoneNumber,
             data: action.payload,
@@ -119,23 +115,7 @@ export default (state = initialState, action) => {
           message: action.payload,
         },
       };
-    case types.CHANGE_NEW_EMAIL_SUCCESS:
-      return {
-        ...state,
-        newEmail: {
-          ...state.newEmail,
-          data: action.payload,
-        },
-      };
-    case types.IS_LOADING_CHANGE_NEW_EMAIL:
-      return {
-        ...state,
-        newEmail: {
-          ...state.newEmail,
-          loading: action.payload,
-        },
-      };
-    case types.RESET_CHANGE_EMAIL:
+    case types.RESET_USER:
       return {
         ...state,
         checkPassword: resetData,
@@ -144,27 +124,26 @@ export default (state = initialState, action) => {
           phoneNumber: resetData,
         },
         verifyOtpCheckEmail: resetData,
-        newEmail: resetData,
       };
     default:
       return state;
   }
 };
 
-export const checkPasswordChangeEmail = payload => ({
-  type: types.CHECK_PASSWORD_CHANGE_EMAIL,
+export const checkPasswordChangePhoneNumber = payload => ({
+  type: types.CHECK_PASSWORD_CHANGE_PHONE_NUMBER,
   payload,
 });
-export const checkPasswordSuccessChangeEmail = payload => ({
-  type: types.CHECK_PASSWORD_SUCCESS_CHANGE_EMAIL,
+export const checkPasswordSuccessPhoneNumber = payload => ({
+  type: types.CHECK_PASSWORD_SUCCESS_CHANGE_PHONE_NUMBER,
   payload,
 });
-export const isLoadingcheckPasswordSuccessChangeEmail = payload => ({
-  type: types.IS_LOADING_CHECK_PASSWORD_CHANGE_EMAIL,
+export const isLoadingcheckPasswordSuccessPhoneNumber = payload => ({
+  type: types.IS_LOADING_CHECK_PASSWORD_CHANGE_PHONE_NUMBER,
   payload,
 });
-export const resetCheckPasswordChangeEmail = payload => ({
-  type: types.RESET_CHECK_PASSWORD_CHANGE_EMAIL,
+export const resetCheckPasswordChangePhoneNumber = payload => ({
+  type: types.RESET_CHECK_PASSWORD_CHANGE_PHONE_NUMBER,
   payload,
 });
 
@@ -208,19 +187,7 @@ export const setMessageErrorVerifyOtpCheckEmail = payload => ({
   type: types.SET_MESSAGE_ERROR_VERIFY_OTP_CHECK_EMAIL,
   payload,
 });
-export const changeNewEmail = payload => ({
-  type: types.CHANGE_NEW_EMAIL,
-  payload,
-});
-export const changeNewEmailSuccess = payload => ({
-  type: types.CHANGE_NEW_EMAIL_SUCCESS,
-  payload,
-});
-export const isLoadingchangeNewEmail = payload => ({
-  type: types.IS_LOADING_CHANGE_NEW_EMAIL,
-  payload,
-});
-export const resetChangeEmail = payload => ({
-  type: types.RESET_CHANGE_EMAIL,
+export const resetUser = payload => ({
+  type: types.RESET_USER,
   payload,
 });

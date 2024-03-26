@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {configureStore} from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import {
@@ -17,34 +16,7 @@ import {encryptTransform} from 'redux-persist-transform-encrypt';
 import rootSaga from './sagas';
 import rootReducers from './reducers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import secureStorage from "../lib/secureStorage";
 import {Platform} from 'react-native';
-// import * as SecureStore from "expo-secure-store";
-
-// const getStorage = (key) => {
-//   console.log("🚀 ~ getStorage ~ key:", key);
-//   if (Platform.OS === "android") {
-//     return {
-//       ...secureStorage,
-//     };
-//   } else {
-//     return AsyncStorage;
-//   }
-// };
-
-// const getStorage = (key) => {
-//   if (Platform.OS === "android") {
-//     return {
-//       getItem: async () => await SecureStore.getItem(key),
-//       setItem: async () => {
-//         return { ...secureStorage };
-//       },
-//       removeItem: async () => await SecureStore.removeItem(key),
-//     };
-//   } else {
-//     return null;
-//   }
-// };
 
 const encryptor = encryptTransform({secretKey: 'secretkey'});
 
@@ -55,7 +27,6 @@ const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
   transforms: Platform.OS === 'web' ? [encryptor] : [],
   key: 'root',
-  // storage: getStorage("register"),
   storage: AsyncStorage,
   whitelist: ['register', 'login'],
 };
@@ -65,12 +36,10 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
-      immutableCheck: false,
-      serializableCheck: false,
-
-      // {
-      //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      // }
+      // immutableCheck: false,
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
     }).concat(sagaMiddleware),
 });
 

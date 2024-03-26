@@ -1,13 +1,13 @@
-import { View, Text } from "react-native";
-import React from "react";
+import {View, Text} from 'react-native';
+import React from 'react';
 
-export default function Message({ route }) {
-  console.log("🚀 ~ Message ~ route:", route);
-  const { name } = route.params;
+export default function Message({route}) {
+  console.log('🚀 ~ Message ~ route:', route);
+  const {variantType} = route.params;
 
   return (
     <View>
-      <Text>Message {name}</Text>
+      <Text>Message {variantType}</Text>
     </View>
   );
 }

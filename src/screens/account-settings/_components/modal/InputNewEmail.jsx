@@ -2,7 +2,8 @@ import {View, Text, Platform} from 'react-native';
 import React from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {Button, Input} from '@rneui/themed';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {changeNewEmail} from '../../../../redux/modules/change-email/reducer';
 
 export default function InputNewEmail({user}) {
   const {
@@ -12,14 +13,24 @@ export default function InputNewEmail({user}) {
   } = useForm({
     defaultValues: {
       currentEmail: user?.data?.data?.email || '',
-      newEmail: '',
+      newEmailValue: '',
     },
   });
 
+  const {token} = useSelector(state => state.login);
+  const {newEmail} = useSelector(state => state.changeEmail);
+
   const dispatch = useDispatch();
 
-  const onSubmit = async ({newEmail}) => {
-    console.log('🚀 ~ InputNewEmail ~ newEmail:', newEmail);
+  const onSubmit = async ({newEmailValue}) => {
+    await dispatch(
+      changeNewEmail({
+        data: {
+          new_email: newEmailValue,
+        },
+        token,
+      }),
+    );
   };
 
   const defaultStyle = {};
@@ -29,6 +40,8 @@ export default function InputNewEmail({user}) {
 
   return (
     <View>
+      <Text className="mb-3 font-bold text-lg ">Ubah Email</Text>
+
       <Text className="mb-3 text-center">
         Pastikan email kamu aktif untuk keamanan akun
       </Text>
@@ -97,7 +110,8 @@ export default function InputNewEmail({user}) {
       </Text>
 
       <Button
-        disabled={!isValid}
+        disabled={!isValid || newEmail.loading}
+        loading={newEmail.loading}
         onPress={handleSubmit(onSubmit)}
         title="Selanjutnya"
         buttonStyle={{

@@ -121,7 +121,7 @@ export default function Login({navigation}) {
                   secureTextEntry={showPassword ? false : true}
                   inputContainerStyle={{
                     marginBottom: Platform.OS === 'web' && 12,
-                    // borderColor: "transparent",
+                    // borderColor: '#fa541c',
                   }}
                   inputStyle={{
                     fontSize: 16,

@@ -6,15 +6,15 @@ import types from './types';
 function* watchCheckPassword(values) {
   const {payload} = values;
 
-  yield put(actions.isLoadingcheckPasswordSuccessChangeEmail(true));
+  yield put(actions.isLoadingcheckPasswordSuccessPhoneNumber(true));
   try {
     const response = yield call(Api.user.checkPassword, payload);
     const {data} = response;
-    yield put(actions.checkPasswordSuccessChangeEmail(data));
+    yield put(actions.checkPasswordSuccessPhoneNumber(data));
   } catch (e) {
     console.log(e);
   } finally {
-    yield put(actions.isLoadingcheckPasswordSuccessChangeEmail(false));
+    yield put(actions.isLoadingcheckPasswordSuccessPhoneNumber(false));
   }
 }
 
@@ -69,30 +69,14 @@ function* watchVerifyOtpCheckEmail(values) {
   }
 }
 
-function* watchChangeNewEmail(values) {
-  const {payload} = values;
-
-  yield put(actions.isLoadingchangeNewEmail(true));
-  try {
-    const response = yield call(Api.changeEmail.changeNewEmail, payload);
-    const {data} = response;
-    yield put(actions.changeNewEmailSuccess(data));
-  } catch (e) {
-    console.log(e);
-  } finally {
-    yield put(actions.isLoadingchangeNewEmail(false));
-  }
-}
-
 const sagas = [
-  takeLatest(types.CHECK_PASSWORD_CHANGE_EMAIL, watchCheckPassword),
-  takeLatest(types.VERIFICATION_EMAIL_METHOD, watchVerificationEmailMethod),
-  takeLatest(
-    types.VERIFICATION_PHONE_NUMBER_METHOD,
-    watchVerificationEmailMethodByPhoneNumber,
-  ),
-  takeLatest(types.VERIFY_OTP_CHECK_EMAIL, watchVerifyOtpCheckEmail),
-  takeLatest(types.CHANGE_NEW_EMAIL, watchChangeNewEmail),
+  takeLatest(types.CHECK_PASSWORD_CHANGE_PHONE_NUMBER, watchCheckPassword),
+  // takeLatest(types.VERIFICATION_EMAIL_METHOD, watchVerificationEmailMethod),
+  // takeLatest(
+  //   types.VERIFICATION_PHONE_NUMBER_METHOD,
+  //   watchVerificationEmailMethodByPhoneNumber,
+  // ),
+  // takeLatest(types.VERIFY_OTP_CHECK_EMAIL, watchVerifyOtpCheckEmail),
 ];
 
 export default sagas;

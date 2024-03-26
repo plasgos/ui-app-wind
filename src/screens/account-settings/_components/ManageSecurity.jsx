@@ -111,7 +111,7 @@ export default function ManageSecurity({navigation}) {
         </View>
       </TouchableOpacity>
 
-      {openModalEmail ? (
+      {openModalEmail && (
         <EditEmailModal
           token={token}
           user={user}
@@ -120,7 +120,9 @@ export default function ManageSecurity({navigation}) {
           navigation={navigation}
           type="changeEmail"
         />
-      ) : (
+      )}
+
+      {openModalPhoneNumber && (
         <EditPhoneNumberModal
           token={token}
           user={user}

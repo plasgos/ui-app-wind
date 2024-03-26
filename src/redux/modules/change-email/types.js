@@ -20,6 +20,5 @@ export default {
   CHANGE_NEW_EMAIL: 'change-new-email',
   CHANGE_NEW_EMAIL_SUCCESS: 'change-new-email-success',
   IS_LOADING_CHANGE_NEW_EMAIL: 'is-loading-change-new-email',
-
-  RESET_USER: 'reset-user',
+  RESET_CHANGE_EMAIL: 'reset-change-email',
 };

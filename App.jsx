@@ -33,6 +33,7 @@ import InputNewEmail from './src/screens/account-settings/_components/modal/Inpu
 import MethodVerifyChangeEmail from './src/screens/account-settings/method-verify-change-email';
 import MethodVerifyChangePhoneNumber from './src/screens/account-settings/method-verify-change-phone-number';
 import HeaderMethodVerify from './src/screens/account-settings/_components/HeaderMethodVerify';
+import InputOtpEmail from './src/screens/account-settings/_components/modal/InputOtpEmail';
 
 const Stack = createNativeStackNavigator();
 const navigationRef = createNavigationContainerRef();
@@ -167,6 +168,13 @@ export default function App() {
                 header: () => <HeaderMethodVerify navigation={navigation} />,
               })}
             />
+            {/* <Stack.Screen
+              name="InputOtpEmail"
+              component={InputOtpEmail}
+              options={{
+                headerTitle: 'Verifikasi Kode',
+              }}
+            /> */}
             <Stack.Screen
               name="InputNewEmail"
               component={InputNewEmail}
