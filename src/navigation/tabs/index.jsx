@@ -4,17 +4,17 @@ import {Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import HeaderHomeScreen from '../components/home/HeaderHomeScreen';
-import Home from '../screens/home';
-import Notifications from '../screens/notifications';
-import RFQ from '../screens/rfq';
-import Whislist from '../screens/whislist';
-import Account from '../screens/account';
-import Login from '../screens/login';
-
 import {useSelector} from 'react-redux';
-import HeaderAccount from '../screens/account/_components/HeaderAccount';
-import AccountNav from '../navigation/tabs/account/AccountNav';
+
+import HeaderHomeScreen from '../../components/home/HeaderHomeScreen';
+import HomeScreen from '../../screens/home';
+import Notifications from '../../screens/notifications';
+import Login from '../../screens/login';
+import RFQ from '../../screens/rfq';
+import Whislist from '../../screens/whislist';
+import Account from '../../screens/account';
+import HeaderAccount from '../../screens/account/_components/HeaderAccount';
+import AccountNav from './account/AccountNav';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,8 +38,8 @@ export default function TabsLayout() {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
-        name="homepage"
-        component={Home}
+        name="hometab"
+        component={HomeScreen}
         options={({navigation}) => ({
           tabBarIcon: ({color, size}) => {
             return <FontAwesome name="home" size={size} color={color} />;
@@ -83,15 +83,12 @@ export default function TabsLayout() {
       <Tab.Screen
         name="Account"
         component={AccountNav}
-        // component={logged_in ? Account : Login}
-        // options={({navigation}) => ({
-        //   headerTitle: '',
-        //   headerShown: logged_in ? true : false,
-        //   tabBarIcon: ({color, size}) => {
-        //     return <FontAwesome name="user-o" size={size} color={color} />;
-        //   },
-        //   header: () => <HeaderAccount navigation={navigation} />,
-        // })}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => {
+            return <FontAwesome name="user-o" size={size} color={color} />;
+          },
+        }}
       />
     </Tab.Navigator>
   );

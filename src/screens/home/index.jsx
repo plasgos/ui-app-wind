@@ -8,7 +8,7 @@ import FindYourItem from '../../components/home/FindYourItem';
 import NewProducts from '../../components/home/NewProducts';
 import useClearAsyncStorage from '../../hooks/use-clear-asyncStorage';
 export default function HomeScreen() {
-  useClearAsyncStorage();
+  // useClearAsyncStorage();
 
   return (
     <ScrollView

@@ -1,15 +1,17 @@
-import {configureStore} from '@reduxjs/toolkit';
+// import {configureStore} from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import {
-  FLUSH,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-  REHYDRATE,
+  // FLUSH,
+  // PAUSE,
+  // PERSIST,
+  // PURGE,
+  // REGISTER,
+  // REHYDRATE,
   persistStore,
   persistReducer,
 } from 'redux-persist';
+
+import {createStore, applyMiddleware} from 'redux';
 
 import createCompressor from 'redux-persist-transform-compress';
 import {encryptTransform} from 'redux-persist-transform-encrypt';
@@ -32,16 +34,21 @@ const persistConfig = {
 };
 const persistedReducer = persistReducer(persistConfig, rootReducers);
 
-export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      // immutableCheck: false,
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }).concat(sagaMiddleware),
-});
+// export const store = configureStore({
+//   reducer: persistedReducer,
+//   middleware: getDefaultMiddleware =>
+//     getDefaultMiddleware({
+//       // immutableCheck: false,
+//       serializableCheck: {
+//         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+//       },
+//     }).concat(sagaMiddleware),
+// });
+
+export const store = createStore(
+  persistedReducer,
+  applyMiddleware(sagaMiddleware),
+);
 
 export const persistor = persistStore(store, {transform: [compressor]});
 

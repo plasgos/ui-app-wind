@@ -1,21 +1,15 @@
-import {
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  View,
-  BackHandler,
-} from 'react-native';
+import {Text, TouchableOpacity, View, BackHandler} from 'react-native';
 import React, {useCallback} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 
-import {StatusBar} from 'expo-status-bar';
 import {
   resetChangeEmail,
   resetCheckPasswordChangeEmail,
 } from '../../../redux/modules/change-email/reducer';
 import {resetCheckPasswordChangePhoneNumber} from '../../../redux/modules/change-phone-number/reducer';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export default function HeaderMethodVerify({navigation}) {
   const dispatch = useDispatch();
@@ -43,14 +37,15 @@ export default function HeaderMethodVerify({navigation}) {
   );
 
   return (
-    <SafeAreaView className=" h-[64px] bg-white shadow-sm  p-3 flex flex-row gap-x-3 items-center">
-      <StatusBar translucent={false} />
+    <SafeAreaView className="bg-white shadow-sm px-3 py-5 flex flex-row gap-x-3 items-center">
       <TouchableOpacity onPress={handleBackButton} className="mr-1">
         <AntDesign name="arrowleft" size={24} />
       </TouchableOpacity>
 
       <View className="flex-grow">
-        <Text className="text-lg font-semibold">Metode Verifikasi</Text>
+        <Text className="text-lg text-[#1c1c1e]  font-semibold">
+          Metode Verifikasi
+        </Text>
       </View>
     </SafeAreaView>
   );

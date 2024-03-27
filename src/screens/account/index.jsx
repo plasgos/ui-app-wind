@@ -16,7 +16,7 @@ export default function Account({navigation}) {
       contentContainerStyle={{
         paddingBottom: 50,
       }}>
-      <StatusBar translucent={true} />
+      {/* <StatusBar translucent={true} /> */}
 
       <View className="m-4 flex flex-row justify-between items-center ">
         <Avatar size={64} rounded source={{uri: login.user.avatar_img}} />

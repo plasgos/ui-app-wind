@@ -6,6 +6,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {getLogin, resetMessageLogin} from '../../redux/modules/login/reducer';
 import Toast from 'react-native-toast-message';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export default function Login({navigation}) {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +23,12 @@ export default function Login({navigation}) {
     }
     dispatch(resetMessageLogin());
   }, [dispatch, login.message]);
+
+  useEffect(() => {
+    if (login.logged_in) {
+      navigation.navigate('hometab');
+    }
+  }, [login.logged_in, navigation]);
 
   const {
     control,
@@ -46,7 +53,9 @@ export default function Login({navigation}) {
           password,
         }),
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const defaultStyle = {};
@@ -55,7 +64,7 @@ export default function Login({navigation}) {
   }
 
   return (
-    <View className="flex-1  justify-center items-center bg-white p-10">
+    <SafeAreaView className="flex-1  justify-center items-center bg-white p-10">
       {/* <Image
         style={{width: 150, height: 60, objectFit: 'contain'}}
         source={require('../../../assets/images/plasgos.png')}
@@ -200,6 +209,6 @@ export default function Login({navigation}) {
           </TouchableOpacity>
         </View>
       </Card>
-    </View>
+    </SafeAreaView>
   );
 }

@@ -5,13 +5,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {StatusBar} from 'expo-status-bar';
 
-import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const HeaderHomeScreen = ({navigation}) => {
   return (
     <SafeAreaView className="flex flex-row items-center gap-x-4 p-3 bg-white  ">
-      <StatusBar translucent={false} />
-      <View className="absolute left-6 text-slate-300">
+      {/* <StatusBar translucent={false} /> */}
+      <View className="absolute left-6 bottom-6 text-slate-300">
         <Ionicons name="search-sharp" size={14} color="#86939E" />
       </View>
 

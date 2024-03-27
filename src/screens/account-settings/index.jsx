@@ -1,16 +1,28 @@
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {Avatar} from '@rneui/themed';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Octicons from 'react-native-vector-icons/Octicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {resetLogin} from '../../redux/modules/login/reducer';
 
 export default function AccountSettings({navigation}) {
   const login = useSelector(state => state.login);
-  // const changePhoneNumber = useSelector(state => state.changePhoneNumber);
-  // console.log('🚀 ~ AccountSettings ~ changePhoneNumber:', changePhoneNumber);
 
   const changeEmail = useSelector(state => state.changeEmail);
   console.log('🚀 ~ AccountSettings ~ changeEmail:', changeEmail);
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(resetLogin());
+    navigation.navigate('hometab');
+
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'AccountScreen'}],
+    });
+  };
 
   return (
     <ScrollView
@@ -45,6 +57,17 @@ export default function AccountSettings({navigation}) {
               <Text className="text-xs">
                 Ubah email, kata sandi dan nomer ponsel
               </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+
+      <View className="bg-white p-3 my-3">
+        <TouchableOpacity onPress={handleLogout} className="flex flex-col ">
+          <View className="w-full flex flex-row items-center p-3">
+            <MaterialIcons style={{marginRight: 10}} name="logout" size={24} />
+            <View className="flex-grow">
+              <Text className="font-semibold">Keluar Akun</Text>
             </View>
           </View>
         </TouchableOpacity>
